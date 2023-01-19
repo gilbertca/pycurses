@@ -41,22 +41,35 @@ class ListView:
 		self.iterable = iterable
 		self.atr_dict = atr
 		self.atr = self.atr_dict.get # self.atr('key') returns the value, saving typing .get()
-		# Temporary parameters:
-		self._calculate_size()
-		self._calculate_window_valign()
 		# Steps to create window:
-		self.define_colors() # init color pairs for use using provided string keywords
 		self.create_window() # create a pad of fixed dimensions based on string keywords
+		# Temporary line:
+		stri = f"""Height:{self.height} Width:{self.width}
+			Top-Left-Y-X:({self.topy},{self.leftx})
+			Bot-Right-Y-X:({self.boty},{self.rightx})"""
+		self.iterable = [string.strip() for string in stri.split("\n")]
+		# ^Temporary line^
 		self.draw_window() # draw text to screen using given colors
-
-	def define_colors(self):
-		self.has_colors = 1
-		curses.init_pair(1, curses.COLOR_RED, curses.COLOR_WHITE)
 
 	def create_window(self):
 		"""Creates a pad or window object based on given parameters"""
 		self._calculate_size()
+		self._calculate_window_valign()
+		self._calculate_window_halign()
+		self._define_colors() # init color pairs for use using provided string keywords
 		self.screen = curses.newpad(self.height, self.width)
+
+	def draw_window(self):
+		"""Draw the contents to self.screen"""
+		for n in self.iterable:
+			self.screen.addstr(f"{n}\n")
+		if self.has_colors:
+			self.screen.bkgd(' ', curses.color_pair(1))
+		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
+
+	def _define_colors(self):
+		self.has_colors = 1
+		curses.init_pair(1, curses.COLOR_RED, curses.COLOR_WHITE)
 
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
@@ -65,6 +78,7 @@ class ListView:
 		vborder = self.atr('vborder') if self.atr('vborder') is not None else -1
 		hborder = self.atr('hborder') if self.atr('hborder') is not None else -1
 		# Height calculations:
+		# TODO: Check else statements for truthiness
 		if height == -1  and vborder == -1:
 			self.height = curses.LINES
 		elif height == -1  and vborder >= 0:
@@ -74,6 +88,7 @@ class ListView:
 		else:
 			raise ValueError("Can not define a custom height AND vertical padding or height=0.")
 		# Width calculations:
+		# TODO: Check else statements for truthiness
 		if width == -1 and hborder == -1:
 			self.width = curses.COLS
 		elif width == -1 and hborder >= 0:
@@ -84,7 +99,7 @@ class ListView:
 			raise ValueError("Can not define a custom width AND horizontal borders, or width=0.")
 
 	def _calculate_window_valign(self):
-		"""Method run by XXX to calculate topy and boty for draw_window()"""
+		"""Method run by create_window() to calculate topy and boty for draw_window()"""
 		# Note: assignment of -1 is to prevent type errors when comparing int to nonetype
 		topy = self.atr('topy') if self.atr('topy') is not None else -1
 		boty = self.atr('boty') if self.atr('boty') is not None else -1
@@ -97,17 +112,18 @@ class ListView:
 			self.topy = center - math.floor(self.height/2) # Always move up 1!
 			self.boty = center + math.ceil(self.height/2) # Always move up 1!
 
-	def _calculate_halign(self):
-		"""Method run by XXX to calculate topx and botx for draw_window()"""
-		pass
-
-	def draw_window(self):
-		"""Draw the contents to self.screen"""
-		for n in self.iterable:
-			self.screen.addstr(f"{n}\n")
-		if self.has_colors:
-			self.screen.bkgd(' ', curses.color_pair(1))
-		self.screen.refresh(0, 0, self.topy, 10, self.boty, 30)
+	def _calculate_window_halign(self):
+		"""Method run by create_window() to calculate topx and botx for draw_window()"""
+		leftx = self.atr('leftx') if self.atr('leftx') is not None else -1
+		rightx = self.atr('rightx') if self.atr('rightx') is not None else -1
+		halign = self.atr('halign')
+		if leftx >= 0 and rightx >= 0:
+			self.leftx = leftx
+			self.rightx = rightx
+		if halign == 'center' or halign == None:
+			center = math.floor(curses.COLS/2) # Always move left 1 from center if odd!
+			self.leftx = center - math.floor(self.width/2) # Alwas move left 1!
+			self.rightx = center + math.ceil(self.height/2) # Always move left 1!
 
 	def draw_content(self):
 		pass	
@@ -125,14 +141,13 @@ def main(stdscr):
 	"""
 	# Creating bogus data
 	valign = 'center'
+	halign = 'center'
 	height = width = 20
-	ind = 0
-	interesting_string = f"Height is {height} and width is {width}"
-	iterable = interesting_string.split(" ")
+	iterable = "A string."
 	# Running actual code:
 	listview = ListView(iterable, 
 		height=height, width=width,
-		valign=valign
+		valign=valign, halign=halign
 	)
 	listview.screen.getch()
 	stdscr.refresh()
