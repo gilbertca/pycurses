@@ -36,6 +36,7 @@ class ListView:
 	Also top, bottom, left right, center
 	Width can be a keyword string, or a numeric value
 	"""
+	# Need to define/declare variables regarding color pairs
 	def __init__(self, iterable, **atr):
 		# Required setup:
 		self.iterable = iterable
@@ -83,9 +84,12 @@ class ListView:
 		# This function
 		self.CONSTANTUPTOP
 		count = 0
+		# WE NEED TWO MAPS
 		_color_map = {
-			'text' : ,
-			'background' : self.text_color
+			# TEST: IF SELF.DICT.GET IS AT RUNTIME OR INIT TIME
+			'text' : self.text_color,
+			'background' : self.background_color,
+			'important' : self.important_color,
 		}
 		for color in self.atr_dict: # Loop through self.atr
 			if color.contains("color"): # Ensure only grab color arguments
@@ -100,23 +104,23 @@ class ListView:
 		hborder = self.atr('hborder') if self.atr('hborder') is not None else -1
 		# Height calculations:
 		# TODO: Check else statements for truthiness
-		if height == -1  and vborder == -1:
+		if height == -1  and vborder == -1: # No border / No height case
 			self.height = curses.LINES
-		elif height == -1  and vborder >= 0:
+		elif height == -1  and vborder >= 0: # Border only case
 			self.height = curses.LINES - (2 * vborder)
-		elif height > 0 and vborder == -1:
+		elif height > 0 and vborder == -1: # Height only case
 			self.height = height
-		else:
-			raise ValueError("Can not define a custom height AND vertical padding or height=0.")
+		else: # Error case: cannot have height and border
+			raise ValueError("Can not define a custom height AND vertical border or height=0.")
 		# Width calculations:
 		# TODO: Check else statements for truthiness
-		if width == -1 and hborder == -1:
+		if width == -1 and hborder == -1: # No border / No height case
 			self.width = curses.COLS
-		elif width == -1 and hborder >= 0:
+		elif width == -1 and hborder >= 0: # Border only case
 			self.width = curses.COLS - (2 * hborder)
-		elif width > 0 and hborder == -1:
+		elif width > 0 and hborder == -1: # Height only case
 			self.width = width
-		else:
+		else: # Error case: cannot have height and border
 			raise ValueError("Can not define a custom width AND horizontal borders, or width=0.")
 
 	def _calculate_window_valign(self):
