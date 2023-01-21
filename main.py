@@ -69,10 +69,28 @@ class ListView:
 		pass
 
 	def _init_colors():
+		# Run curses.init_pair() for all colors
+		# This function runs init
+		count = 0
+		curses.init_pair(1, self.atr('text_color')[0], self.atr('text_color')[1])
+	
+	def _define_colors(self):
+		# Run curses.init_color() for all colors
 		pass
 
-	def _define_colors(self):
-		pass
+	def _map_colors(self):
+		# Map all colors to keywords
+		# This function
+		self.CONSTANTUPTOP
+		count = 0
+		_color_map = {
+			'text' : ,
+			'background' : self.text_color
+		}
+		for color in self.atr_dict: # Loop through self.atr
+			if color.contains("color"): # Ensure only grab color arguments
+				key = color.split('_')[0]
+				value = _color_map.get(key)
 
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
@@ -152,17 +170,20 @@ def main(stdscr):
 	A method for testing the view
 	"""
 	# Creating bogus data
-	valign = 'center'
-	halign = 'center'
-	height = width = 20
-	iterable = "A string."
+	iterable = ""
+	atrs = {
+		'valign' : 'center',
+		'halign' : 'center',
+		'height' : 20,
+		'width' : 20,
+		'text_color' : (curses.COLOR_RED, curses.COLOR_BLUE),
+		'background_color' : (curses.COLOR_YELLOW, curses.COLOR_BLUE),
+	}
 	# Running actual code:
-	listview = ListView(iterable, 
-		height=height, width=width,
-		valign=valign, halign=halign
-	)
+	listview = ListView(iterable, **atrs)
 	listview.screen.getch()
-	stdscr.refresh()
+
+	"""stdscr.refresh()
 	noneview = ListView("NONEVIEW", 
 		height=None, width=None,
 		valign=None, halign=None,
@@ -171,7 +192,8 @@ def main(stdscr):
 	noneview.screen.getch()
 	stdscr.touchwin()
 	stdscr.refresh()
-	noneview.screen.getch()
+	noneview.screen.getch()"""
+
 	return 0
 
 if __name__ == "__main__":
