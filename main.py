@@ -114,6 +114,12 @@ class ListView:
 			center = math.floor(curses.LINES/2) # Always move up 1 from center if odd!
 			self.topy = center - math.floor(self.height/2) # Always move up 1!
 			self.boty = center + math.ceil(self.height/2) # Always move up 1!
+		if valign == 'top':
+			self.topy = 0
+			self.boty = 0 + self.height - 1
+		if valign == 'bottom':
+			self.topy = curses.LINES - 1
+			self.boty = curses.LINES - self.height
 
 	def _calculate_window_halign(self):
 		"""Method run by create_window() to calculate topx and botx for draw_window()"""
@@ -127,6 +133,12 @@ class ListView:
 			center = math.floor(curses.COLS/2) # Always move left 1 from center if odd!
 			self.leftx = center - math.floor(self.width/2) # Alwas move left 1!
 			self.rightx = center + math.ceil(self.height/2) # Always move left 1!
+		if halign == 'left':
+			self.leftx = 0
+			self.rightx = 0 + self.width - 1
+		if halign == 'right':
+			self.leftx = curses.COLS - 1
+			self.rightx = curses.COLS - width
 
 	def close(self):
 		"""Close the window"""
