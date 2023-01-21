@@ -40,7 +40,7 @@ class ListView:
 		# Required setup:
 		self.iterable = iterable
 		self.atr_dict = atr
-		self.atr = self.atr_dict.get # self.atr('key') returns the value, saving typing .get()
+		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
 		# Steps to create window:
 		self.create_window() # create a pad of fixed dimensions based on string keywords
 		# Temporary line:
@@ -63,13 +63,16 @@ class ListView:
 		"""Draw the contents to self.screen"""
 		for n in self.iterable:
 			self.screen.addstr(f"{n}\n")
-		if self.has_colors:
-			self.screen.bkgd(' ', curses.color_pair(1))
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
+	def draw_content(self):
+		pass
+
+	def _init_colors():
+		pass
+
 	def _define_colors(self):
-		self.has_colors = 1
-		curses.init_pair(1, curses.COLOR_RED, curses.COLOR_WHITE)
+		pass
 
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
@@ -124,9 +127,6 @@ class ListView:
 			center = math.floor(curses.COLS/2) # Always move left 1 from center if odd!
 			self.leftx = center - math.floor(self.width/2) # Alwas move left 1!
 			self.rightx = center + math.ceil(self.height/2) # Always move left 1!
-
-	def draw_content(self):
-		pass	
 
 	def close(self):
 		"""Close the window"""
