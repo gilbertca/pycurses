@@ -36,12 +36,20 @@ class ListView:
 	Also top, bottom, left right, center
 	Width can be a keyword string, or a numeric value
 	"""
+	COLOR_INDEX_MAP = {
+		'text' : 1,
+		'background' : 2,
+		'important' : 3,
+	}
+	DEFAULT_TEXT = curses.COLOR_BLACK
+	DEFAULT_BACK = curses.COLOR_WHITE
 	# Need to define/declare variables regarding color pairs
 	def __init__(self, iterable, **atr):
 		# Required setup:
 		self.iterable = iterable
 		self.atr_dict = atr
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
+		self.c = {}
 		# Steps to create window:
 		self.create_window() # create a pad of fixed dimensions based on string keywords
 		# Temporary line:
@@ -81,20 +89,19 @@ class ListView:
 
 	def _map_colors(self):
 		# Map all colors to keywords
-		# This function
-		self.CONSTANTUPTOP
+		# Need to figure out what type curses.COLOR is
 		count = 0
-		# WE NEED TWO MAPS
-		_color_map = {
-			# TEST: IF SELF.DICT.GET IS AT RUNTIME OR INIT TIME
-			'text' : self.text_color,
-			'background' : self.background_color,
-			'important' : self.important_color,
-		}
-		for color in self.atr_dict: # Loop through self.atr
-			if color.contains("color"): # Ensure only grab color arguments
-				key = color.split('_')[0]
-				value = _color_map.get(key)
+		for atr in self.atr_dict: # Loop through self.atr
+			if atr.contains("color"): # Ensure only grab color arguments
+				key = atr.split('_')[0] # Extract key from string
+				pair_num = _color_index_map.get(key)
+				value = self.atr.get(key)
+				if isinstance(value, int): # Default background is black
+					curses.init_pair(pair_num, value, DEFAULT_BACK)
+				elif value is None: # Default color is white if no color for key
+					curses.init_pair(pair_num, DEFAULT_TEXT, DEFAULT_BACK)
+				else: # Apply selected colors
+					curses.init_pair(pair_num, *value)
 
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
