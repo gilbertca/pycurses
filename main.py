@@ -79,25 +79,16 @@ class ListView:
 	def draw_content(self):
 		pass
 
+	def close(self):
+		"""Close the window"""
+		# Does not work!
+		pass
+		#self.screen.clear()
+		#self.screen.refresh()
+
 	def _define_colors(self):
 		"""A function to define custom colors. TODO."""
 		pass
-
-	def _map_colors(self):
-		"""Looks through self.atr, grabbing all attributes with 'color' inside
-		and then mapping them to a color pair number."""
-		for atr in self.atr_dict: # Loop through self.atr
-			if "color" in atr: # Ensure only grab color attributes
-				color_key = atr.split('_')[0] # Extract key from string
-				pair_num = COLOR_MAP.get(color_key)
-				color_value = self.atr.get(key)
-				if isinstance(value, int): # Default background is black
-					curses.init_pair(pair_num, color_value, DEFAULT_BACK)
-				elif value is None: # Default color is white if no color for key
-					curses.init_pair(pair_num, DEFAULT_TEXT, DEFAULT_BACK)
-				else: # Apply selected colors
-					curses.init_pair(pair_num, *color_value)
-				self.colors.update(color_key, pair_num)
 
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
@@ -165,12 +156,21 @@ class ListView:
 			self.leftx = curses.COLS - 1
 			self.rightx = curses.COLS - width
 
-	def close(self):
-		"""Close the window"""
-		# Does not work!
-		pass
-		#self.screen.clear()
-		#self.screen.refresh()
+	def _map_colors(self):
+		"""Looks through self.atr, grabbing all attributes with 'color' inside
+		and then mapping them to a color pair number."""
+		for atr in self.atr_dict: # Loop through self.atr
+			if "color" in atr: # Ensure only grab color attributes
+				color_key = atr.split('_')[0] # Extract key from string
+				pair_num = self.COLOR_MAP.get(color_key)
+				color_value = self.atr(color_key)
+				if isinstance(color_value, int): # Default background is black
+					curses.init_pair(pair_num, color_value, DEFAULT_BACK)
+				elif color_value is None: # Default color is white if no color for key
+					curses.init_pair(pair_num, DEFAULT_TEXT, DEFAULT_BACK)
+				else: # Apply selected colors
+					curses.init_pair(pair_num, *color_value)
+				self.colors.update(color_key, pair_num)
 
 def main(stdscr):
 	"""
