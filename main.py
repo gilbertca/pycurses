@@ -36,20 +36,22 @@ class ListView:
 	Also top, bottom, left right, center
 	Width can be a keyword string, or a numeric value
 	"""
-	COLOR_INDEX_MAP = {
+	# More to be added as more requirements are needed
+	# Also need to be able to generate arbitrary color mappings
+		# Need to define/declare variables regarding color pairs
+	def __init__(self, iterable, **atr):
+		self.COLOR_MAP = {
 		'text' : 1,
 		'background' : 2,
 		'important' : 3,
-	}
-	DEFAULT_TEXT = curses.COLOR_BLACK
-	DEFAULT_BACK = curses.COLOR_WHITE
-	# Need to define/declare variables regarding color pairs
-	def __init__(self, iterable, **atr):
+		}
+		self.DEFAULT_TEXT = curses.COLOR_BLACK
+		self.DEFAULT_BACK = curses.COLOR_WHITE
 		# Required setup:
 		self.iterable = iterable
 		self.atr_dict = atr
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
-		self.c = {}
+		self.colors = {}
 		# Steps to create window:
 		self.create_window() # create a pad of fixed dimensions based on string keywords
 		# Temporary line:
@@ -65,7 +67,7 @@ class ListView:
 		self._calculate_size()
 		self._calculate_window_valign()
 		self._calculate_window_halign()
-		self._define_colors() # init color pairs for use using provided string keywords
+		self._map_colors() # init color pairs for use using provided string keywords
 		self.screen = curses.newpad(self.height, self.width)
 
 	def draw_window(self):
@@ -77,31 +79,25 @@ class ListView:
 	def draw_content(self):
 		pass
 
-	def _init_colors():
-		# Run curses.init_pair() for all colors
-		# This function runs init
-		count = 0
-		curses.init_pair(1, self.atr('text_color')[0], self.atr('text_color')[1])
-	
 	def _define_colors(self):
-		# Run curses.init_color() for all colors
+		"""A function to define custom colors. TODO."""
 		pass
 
 	def _map_colors(self):
-		# Map all colors to keywords
-		# Need to figure out what type curses.COLOR is
-		count = 0
+		"""Looks through self.atr, grabbing all attributes with 'color' inside
+		and then mapping them to a color pair number."""
 		for atr in self.atr_dict: # Loop through self.atr
-			if atr.contains("color"): # Ensure only grab color arguments
-				key = atr.split('_')[0] # Extract key from string
-				pair_num = _color_index_map.get(key)
-				value = self.atr.get(key)
+			if "color" in atr: # Ensure only grab color attributes
+				color_key = atr.split('_')[0] # Extract key from string
+				pair_num = COLOR_MAP.get(color_key)
+				color_value = self.atr.get(key)
 				if isinstance(value, int): # Default background is black
-					curses.init_pair(pair_num, value, DEFAULT_BACK)
+					curses.init_pair(pair_num, color_value, DEFAULT_BACK)
 				elif value is None: # Default color is white if no color for key
 					curses.init_pair(pair_num, DEFAULT_TEXT, DEFAULT_BACK)
 				else: # Apply selected colors
-					curses.init_pair(pair_num, *value)
+					curses.init_pair(pair_num, *color_value)
+				self.colors.update(color_key, pair_num)
 
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
