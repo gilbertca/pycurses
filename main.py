@@ -51,7 +51,7 @@ class ListView:
 		}
 		self.DEFAULT_TEXT = curses.COLOR_BLACK
 		self.DEFAULT_BACK = curses.COLOR_WHITE
-		self.TEXT_CHOICES = json_parse(JSON_FILE_NAME).get # Similar to atr, saving typing .get()
+		self.TEXT = json_parse(JSON_FILE_NAME).get # Similar to atr, saving typing .get()
 		# Required setup:
 		self.iterable = iterable
 		self.atr_dict = atr
@@ -66,6 +66,7 @@ class ListView:
 
 	def create_window(self):
 		"""Creates a pad or window object based on given parameters"""
+		logging.info(self.TEXT("calculate_size"))
 		self._calculate_size()
 		self._calculate_window_valign()
 		self._calculate_window_halign()
