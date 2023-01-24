@@ -40,6 +40,7 @@ class ListView:
 	# Also need to be able to generate arbitrary color mappings
 		# Need to define/declare variables regarding color pairs
 	def __init__(self, iterable, **atr):
+		# Constant values:
 		self.COLOR_MAP = {
 		'text' : 1,
 		'background' : 2,
@@ -165,12 +166,12 @@ class ListView:
 				pair_num = self.COLOR_MAP.get(color_key)
 				color_value = self.atr(color_key)
 				if isinstance(color_value, int): # Default background is black
-					curses.init_pair(pair_num, color_value, DEFAULT_BACK)
+					curses.init_pair(pair_num, color_value, self.DEFAULT_BACK)
 				elif color_value is None: # Default color is white if no color for key
-					curses.init_pair(pair_num, DEFAULT_TEXT, DEFAULT_BACK)
+					curses.init_pair(pair_num, self.DEFAULT_TEXT, self.DEFAULT_BACK)
 				else: # Apply selected colors
 					curses.init_pair(pair_num, *color_value)
-				self.colors.update(color_key, pair_num)
+				self.colors.update({color_key:pair_num})
 
 def main(stdscr):
 	"""
