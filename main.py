@@ -2,9 +2,12 @@ import curses
 import math
 import logging
 from argparse import ArgumentParser
+from utils import json_parse
 
 # Logging setup:
 logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
+# Json file location:
+JSON_FILE_NAME = "TEXT.json"
 
 class Focusable:
 	"""An inheritable abtract class which allows a window object to take focus"""
@@ -48,6 +51,7 @@ class ListView:
 		}
 		self.DEFAULT_TEXT = curses.COLOR_BLACK
 		self.DEFAULT_BACK = curses.COLOR_WHITE
+		self.TEXT_CHOICES = json_parse(JSON_FILE_NAME).get # Similar to atr, saving typing .get()
 		# Required setup:
 		self.iterable = iterable
 		self.atr_dict = atr
@@ -56,10 +60,7 @@ class ListView:
 		# Steps to create window:
 		self.create_window() # create a pad of fixed dimensions based on string keywords
 		# Temporary line:
-		stri = f"""Height:{self.height} Width:{self.width}
-			Top-Left-Y-X:({self.topy},{self.leftx})
-			Bot-Right-Y-X:({self.boty},{self.rightx})"""
-		self.iterable = [string.strip() for string in stri.split("\n")]
+		self.iterable = [n for n in self.atr_dict]
 		# ^Temporary line^
 		self.draw_window() # draw text to screen using given colors
 
@@ -74,7 +75,7 @@ class ListView:
 	def draw_window(self):
 		"""Draw the contents to self.screen"""
 		for n in self.iterable:
-			self.screen.addstr(f"{n}\n")
+			self.screen.addstr(f"{n}:{self.atr(n)}\n")
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	def draw_content(self):
@@ -182,8 +183,8 @@ def main(stdscr):
 	atrs = {
 		'valign' : 'center',
 		'halign' : 'center',
-		'height' : 20,
-		'width' : 20,
+		'height' : 30,
+		'width' : 40,
 		'text_color' : (curses.COLOR_RED, curses.COLOR_BLUE),
 		'background_color' : (curses.COLOR_YELLOW, curses.COLOR_BLUE),
 	}
