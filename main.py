@@ -2,7 +2,7 @@ import curses
 import math
 import logging
 from argparse import ArgumentParser
-from utils import json_parse
+from utils import parse_json
 
 # Logging setup:
 logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
@@ -51,18 +51,17 @@ class ListView:
 		}
 		self.DEFAULT_TEXT = curses.COLOR_BLACK
 		self.DEFAULT_BACK = curses.COLOR_WHITE
-		self.TEXT = json_parse(JSON_FILE_NAME).get # Similar to atr, saving typing .get()
+		self.TEXT = parse_json(JSON_FILE_NAME).get # Similar to atr, saving typing .get()
 		# Required setup:
 		self.iterable = iterable
 		self.atr_dict = atr
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
 		self.colors = {}
+		# Temporary value:
+		self.iterable = [n for n in self.atr_dict]
 		# Steps to create window:
 		self.create_window() # create a pad of fixed dimensions based on string keywords
-		# Temporary line:
-		self.iterable = [n for n in self.atr_dict]
-		# ^Temporary line^
-		self.draw_window() # draw text to screen using given colors
+		self.draw_window() # draw text to screen
 
 	def create_window(self):
 		"""Creates a pad or window object based on given parameters"""
@@ -76,7 +75,7 @@ class ListView:
 	def draw_window(self):
 		"""Draw the contents to self.screen"""
 		for n in self.iterable:
-			self.screen.addstr(f"{n}:{self.atr(n)}\n")
+			self.screen.addstr(f"{n}:{self.atr(n)}\n", self.COLOR_MAP.get('text'))
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	def draw_content(self):
