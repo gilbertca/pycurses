@@ -1,8 +1,7 @@
 import curses
 import math
 import logging
-from argparse import ArgumentParser
-from utils import parse_json
+from utils import parse_json, log
 
 # Logging setup:
 # Json file location:
@@ -29,13 +28,6 @@ def errorh(function):
 					
 	return errh
 
-def log(function):
-	"""Decorator to log info about internal functions"""
-	def log(*args, **kwargs):
-		logging.debug(function.__globals__)
-		function(*args, **kwargs)
-	
-	return log
 
 class ListView:
 	"""
