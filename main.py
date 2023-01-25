@@ -5,7 +5,6 @@ from argparse import ArgumentParser
 from utils import parse_json
 
 # Logging setup:
-logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 # Json file location:
 JSON_FILE_NAME = "TEXT.json"
 
@@ -30,6 +29,14 @@ def errorh(function):
 					
 	return errh
 
+def log(function):
+	"""Decorator to log info about internal functions"""
+	def log(*args, **kwargs):
+		logging.debug(function.__globals__)
+		function(*args, **kwargs)
+	
+	return log
+
 class ListView:
 	"""
 	A class to display a curses list given a window/pad object, and a list
@@ -53,6 +60,7 @@ class ListView:
 		self.DEFAULT_BACK = curses.COLOR_WHITE
 		self.TEXT = parse_json(JSON_FILE_NAME).get # Similar to atr, saving typing .get()
 		# Required setup:
+		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		self.iterable = iterable
 		self.atr_dict = atr
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
@@ -65,7 +73,6 @@ class ListView:
 
 	def create_window(self):
 		"""Creates a pad or window object based on given parameters"""
-		logging.info(self.TEXT("calculate_size"))
 		self._calculate_size()
 		self._calculate_window_valign()
 		self._calculate_window_halign()
@@ -92,6 +99,7 @@ class ListView:
 		"""A function to define custom colors. TODO."""
 		pass
 
+	@log
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
 		height = self.atr('height') if self.atr('height') is not None else -1
