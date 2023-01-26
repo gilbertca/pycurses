@@ -18,3 +18,14 @@ def log(function):
 		function(*args, **kwargs)
 	
 	return log
+
+def errorh(function):
+	"""Decorator to wrap functions with try/except blocks."""
+	def errorh(*args, **kwargs):
+		try:
+			function()
+		except:
+			# Formatting logging.critical
+			pass
+
+	return errorh
