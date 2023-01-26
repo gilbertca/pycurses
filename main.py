@@ -18,17 +18,6 @@ class Scrollable:
 	"""
 	pass
 
-def errorh(function):
-	"""Decorator to handle simple try/except statements"""
-	def errh(*args, **kwargs):
-		try:
-			function(*args, **kwargs)
-		except Error as e:
-			logging.warning("Error {e}")
-					
-	return errh
-
-
 class ListView:
 	"""
 	A class to display a curses list given a window/pad object, and a list
@@ -40,8 +29,9 @@ class ListView:
 	"""
 	# More to be added as more requirements are needed
 	# Also need to be able to generate arbitrary color mappings
-		# Need to define/declare variables regarding color pairs
+	# Need to define/declare variables regarding color pairs
 	def __init__(self, iterable, **atr):
+		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
 		self.COLOR_MAP = {
 		'text' : 1,
@@ -52,7 +42,6 @@ class ListView:
 		self.DEFAULT_BACK = curses.COLOR_WHITE
 		self.TEXT = parse_json(JSON_FILE_NAME).get # Similar to atr, saving typing .get()
 		# Required setup:
-		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		self.iterable = iterable
 		self.atr_dict = atr
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
@@ -63,6 +52,7 @@ class ListView:
 		self.create_window() # create a pad of fixed dimensions based on string keywords
 		self.draw_window() # draw text to screen
 
+	@log
 	def create_window(self):
 		"""Creates a pad or window object based on given parameters"""
 		self._calculate_size()
@@ -71,22 +61,25 @@ class ListView:
 		self._map_colors() # init color pairs for use using provided string keywords
 		self.screen = curses.newpad(self.height, self.width)
 
+	@log
 	def draw_window(self):
 		"""Draw the contents to self.screen"""
 		for n in self.iterable:
 			self.screen.addstr(f"{n}:{self.atr(n)}\n", self.COLOR_MAP.get('text'))
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
+	@log
 	def draw_content(self):
 		pass
 
+	@log
 	def close(self):
 		"""Close the window"""
 		# Does not work!
 		pass
 		#self.screen.clear()
 		#self.screen.refresh()
-
+	@log
 	def _define_colors(self):
 		"""A function to define custom colors. TODO."""
 		pass
@@ -119,6 +112,7 @@ class ListView:
 		else: # Error case: cannot have height and border
 			raise ValueError("Can not define a custom width AND horizontal borders, or width=0.")
 
+	@log
 	def _calculate_window_valign(self):
 		"""Method run by create_window() to calculate topy and boty for draw_window()"""
 		# Note: assignment of -1 is to prevent type errors when comparing int to nonetype
@@ -138,7 +132,7 @@ class ListView:
 		if valign == 'bottom':
 			self.topy = curses.LINES - 1
 			self.boty = curses.LINES - self.height
-
+	@log
 	def _calculate_window_halign(self):
 		"""Method run by create_window() to calculate topx and botx for draw_window()"""
 		leftx = self.atr('leftx') if self.atr('leftx') is not None else -1
@@ -158,6 +152,7 @@ class ListView:
 			self.leftx = curses.COLS - 1
 			self.rightx = curses.COLS - width
 
+	@log
 	def _map_colors(self):
 		"""Looks through self.atr, grabbing all attributes with 'color' inside
 		and then mapping them to a color pair number."""
