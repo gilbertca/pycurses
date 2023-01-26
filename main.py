@@ -3,6 +3,8 @@ import math
 import logging
 from utils import parse_json, log
 
+# Note: Reading all class attributes from json files, allowing interface to be created
+# Via a collection of json files
 # Logging setup:
 # Json file location:
 JSON_FILE_NAME = "TEXT.json"
