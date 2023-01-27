@@ -22,9 +22,13 @@ def log(function):
 def errorh(function):
 	"""Decorator to wrap functions with try/except blocks."""
 	def errorh(*args, **kwargs):
-		try:
-			function()
-		except:
+		try: # For unhandleable exceptions
+			try: # Handle exceptions here:
+				function()
+			# Exceptions are associated with each function ****somehow****
+			except (lambda: function.handled_exceptions()) as handled_exception:
+				pass
+		except: # For unhandleable exceptions
 			logging.critical(f"*Critical error* * {datetime.now()} * with * {function.__name__} * due to")
 			raise
 
