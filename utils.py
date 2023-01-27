@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 
 def parse_json(file_name):
-	"""Simple utility to read from a JSON file"""
+	"""Simple utility to read from a JSON file returns a dict object"""
 	json_file = open(file_name)
 	data = json.load(json_file)
 	json_file.close()
@@ -25,7 +25,7 @@ def errorh(function):
 		try:
 			function()
 		except:
-			# Formatting logging.critical
-			pass
+			logging.critical(f"*Critical error* * {datetime.now()} * with * {function.__name__} * due to")
+			raise
 
 	return errorh
