@@ -27,10 +27,3 @@ def log(function):
 			raise
 	
 	return log
-
-def errorh(function):
-	"""Decorator to wrap functions with try/except blocks."""
-	def errorh(*args, **kwargs):
-
-
-	return errorh
