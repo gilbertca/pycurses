@@ -10,18 +10,11 @@ def parse_json(file_name):
 	return data
 
 def log(function):
-	"""Decorator to log info about internal functions"""
+	"""Decorator to log info about internal functions and handle errors."""
 	def log(*args, **kwargs):
 		# String extractions done here:
 		logging.debug(f"{datetime.now()} Function: * {function.__name__} * from: * {function.__globals__.get('__file__')} *")
 		logging.info(f"{datetime.now()} Attempting {function.__name__}.")
-		function(*args, **kwargs)
-	
-	return log
-
-def errorh(function):
-	"""Decorator to wrap functions with try/except blocks."""
-	def errorh(*args, **kwargs):
 		try: # For unhandleable exceptions
 			try: # Handle handleable exceptions here:
 				function(*args, **kwargs)
@@ -32,5 +25,12 @@ def errorh(function):
 		except: # For unhandleable exceptions
 			logging.critical(f"*Critical error* * {datetime.now()} * with * {function.__name__} * due to")
 			raise
+	
+	return log
+
+def errorh(function):
+	"""Decorator to wrap functions with try/except blocks."""
+	def errorh(*args, **kwargs):
+
 
 	return errorh
