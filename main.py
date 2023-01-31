@@ -34,9 +34,9 @@ class ListView:
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
 		self.COLOR_MAP = {
-		'text' : 1,
-		'background' : 2,
-		'important' : 3,
+		'text_color' : 1,
+		'background_color' : 2,
+		'important_color' : 3,
 		}
 		self.DEFAULT_TEXT = curses.COLOR_BLACK
 		self.DEFAULT_BACK = curses.COLOR_WHITE
@@ -62,7 +62,7 @@ class ListView:
 	def draw_window(self):
 		"""Draw the contents to self.screen"""
 		for n in self.iterable:
-			self.screen.addstr(f"{n}:{self.atr(n)}\n", self.COLOR_MAP.get('text'))
+			self.screen.addstr(f"{n}:{self.atr(n)}\n", self.COLOR_MAP.get('text_color'))
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
@@ -138,16 +138,15 @@ class ListView:
 		"""Looks through self.atr, grabbing all attributes with 'color' inside
 		and then mapping them to a color pair number."""
 		for atr in self.atr_dict: # Loop through self.atr
-			if "color" in atr: # Ensure only grab color attributes
-				color_key = atr.split('_')[0] # Extract key from string
-				pair_num = self.COLOR_MAP.get(color_key)
-				color_value = self.atr(color_key)
-				if isinstance(color_value, int): # Default background is black
+			if "color" in atr: # Color only contained by values which set colors
+				pair_num = self.COLOR_MAP.get(atr) # COLOR_MAP links the color key to a pair number for curses
+				color_value = self.atr(atr) # Get actual assigned color value
+				if isinstance(color_value, int): # Default background is black if single color value
 					curses.init_pair(pair_num, color_value, self.DEFAULT_BACK)
-				elif color_value is None: # Default color is white if no color for key
-					curses.init_pair(pair_num, self.DEFAULT_TEXT, self.DEFAULT_BACK)
-				else: # Apply selected colors
-					curses.init_pair(pair_num, *color_value)
+				elif color_value is None: # Default color with no values is white on black 
+					#curses.init_pair(pair_num, self.DEFAULT_TEXT, self.DEFAULT_BACK)
+				else: # Apply both colors if a list of colors is provided
+					#curses.init_pair(pair_num, *color_value)
 
 def main(stdscr):
 	"""
@@ -155,7 +154,6 @@ def main(stdscr):
 	"""
 	listview = ListView()
 	listview.screen.getch()
-	logging.debug(listview.colors)
 	return 0
 
 if __name__ == "__main__":
