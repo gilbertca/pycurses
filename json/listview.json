@@ -2,5 +2,6 @@
 	"valign" : "center",
 	"halign" : "center",
 	"height" : 30,
-	"width" : 40
+	"width" : 40,
+	"text_color" : ["curses.RED", "curses.BLUE"]
 }
