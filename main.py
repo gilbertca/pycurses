@@ -7,7 +7,8 @@ from utils import parse_json, log
 # Via a collection of json files
 # Logging setup:
 # Json file location:
-JSON_FILE_NAME = "TEXT.json"
+JSON_FILE_TEXT = "TEXT.json"
+JSON_FILE_WINDOW = "json/listview.json"
 
 class Focusable:
 	"""An inheritable abtract class which allows a window object to take focus"""
@@ -32,7 +33,7 @@ class ListView:
 	# More to be added as more requirements are needed
 	# Also need to be able to generate arbitrary color mappings
 	# Need to define/declare variables regarding color pairs
-	def __init__(self, iterable, **atr):
+	def __init__(self, **atr):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
 		self.COLOR_MAP = {
@@ -42,10 +43,8 @@ class ListView:
 		}
 		self.DEFAULT_TEXT = curses.COLOR_BLACK
 		self.DEFAULT_BACK = curses.COLOR_WHITE
-		self.TEXT = parse_json(JSON_FILE_NAME).get # Similar to atr, saving typing .get()
-		# Required setup:
-		self.iterable = iterable
-		self.atr_dict = atr
+		self.TEXT = parse_json(JSON_FILE_TEXT).get # Similar to atr, saving typing .get()
+		self.atr_dict = parse_json(JSON_FILE_WINDOW)
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
 		self.colors = {}
 		# Temporary value:
@@ -175,18 +174,7 @@ def main(stdscr):
 	"""
 	A method for testing the view
 	"""
-	# Creating bogus data
-	iterable = ""
-	atrs = {
-		'valign' : 'center',
-		'halign' : 'center',
-		'height' : 30,
-		'width' : 40,
-		'text_color' : (curses.COLOR_RED, curses.COLOR_BLUE),
-		'background_color' : (curses.COLOR_YELLOW, curses.COLOR_BLUE),
-	}
-	# Running actual code:
-	listview = ListView(iterable, **atrs)
+	listview = ListView()
 	listview.screen.getch()
 
 	"""stdscr.refresh()
