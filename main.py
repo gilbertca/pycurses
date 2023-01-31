@@ -43,7 +43,6 @@ class ListView:
 		self.TEXT = parse_json(JSON_FILE_TEXT).get # Similar to atr, saving typing .get()
 		self.atr_dict = parse_json(JSON_FILE_WINDOW)
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
-		self.colors = {}
 		# Temporary value:
 		self.iterable = [n for n in self.atr_dict]
 		# Steps to create window:
@@ -149,7 +148,6 @@ class ListView:
 					curses.init_pair(pair_num, self.DEFAULT_TEXT, self.DEFAULT_BACK)
 				else: # Apply selected colors
 					curses.init_pair(pair_num, *color_value)
-				self.colors.update({color_key:pair_num})
 
 def main(stdscr):
 	"""
