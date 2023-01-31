@@ -176,18 +176,6 @@ def main(stdscr):
 	"""
 	listview = ListView()
 	listview.screen.getch()
-
-	"""stdscr.refresh()
-	noneview = ListView("NONEVIEW", 
-		height=None, width=None,
-		valign=None, halign=None,
-		back_color=None, fore_color=None,
-	)
-	noneview.screen.getch()
-	stdscr.touchwin()
-	stdscr.refresh()
-	noneview.screen.getch()"""
-
 	return 0
 
 if __name__ == "__main__":
