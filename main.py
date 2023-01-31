@@ -70,22 +70,6 @@ class ListView:
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
-	def draw_content(self):
-		pass
-
-	@log
-	def close(self):
-		"""Close the window"""
-		# Does not work!
-		pass
-		#self.screen.clear()
-		#self.screen.refresh()
-	@log
-	def _define_colors(self):
-		"""A function to define custom colors. TODO."""
-		pass
-
-	@log
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
 		height = self.atr('height') if self.atr('height') is not None else -1
