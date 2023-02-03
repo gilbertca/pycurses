@@ -33,11 +33,12 @@ class ListView:
 	def __init__(self, **atr):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
-		self.COLOR_MAP = {
+		self.COLOR__PAIR_MAP = {
 		'text_color' : 1,
 		'background_color' : 2,
 		'important_color' : 3,
 		}
+		self.COLOR = {}
 		self.DEFAULT_TEXT = curses.COLOR_BLACK
 		self.DEFAULT_BACK = curses.COLOR_WHITE
 		self.TEXT = parse_json(JSON_FILE_TEXT).get # Similar to atr, saving typing .get()
@@ -62,7 +63,7 @@ class ListView:
 	def draw_window(self):
 		"""Draw the contents to self.screen"""
 		for n in self.iterable:
-			self.screen.addstr(f"{n}:{self.atr(n)}\n", self.COLOR_MAP.get('text_color'))
+			self.screen.addstr(f"{n}:{self.atr(n)}\n", self.COLOR_PAIR_MAP.get('text_color'))
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
@@ -139,7 +140,7 @@ class ListView:
 		and then mapping them to a color pair number."""
 		for atr in self.atr_dict: # Loop through self.atr
 			if "color" in atr: # Color only contained by values which set colors
-				pair_num = self.COLOR_MAP.get(atr) # COLOR_MAP links the color key to a pair number for curses
+				pair_num = self.COLOR_PAIR_MAP.get(atr) # COLOR_MAP links the color key to a pair number for curses
 				color_value = self.atr(atr) # Get actual assigned color value
 				if isinstance(color_value, int): # Default background is black if single color value
 					curses.init_pair(pair_num, color_value, self.DEFAULT_BACK)
