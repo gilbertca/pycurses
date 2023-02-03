@@ -3,5 +3,6 @@
 	"halign" : "center",
 	"height" : 30,
 	"width" : 40,
-	"text_color" : ["curses.RED", "curses.BLUE"]
+	"text_color" : "red",
+	"text_back" : "blue"
 }

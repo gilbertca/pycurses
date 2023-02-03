@@ -33,12 +33,11 @@ class ListView:
 	def __init__(self, **atr):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
-		self.COLOR__PAIR_MAP = {
+		self.COLOR_PAIR_MAP = {
 		'text_color' : 1,
 		'background_color' : 2,
 		'important_color' : 3,
 		}
-		self.COLOR = {}
 		self.DEFAULT_TEXT = curses.COLOR_BLACK
 		self.DEFAULT_BACK = curses.COLOR_WHITE
 		self.TEXT = parse_json(JSON_FILE_TEXT).get # Similar to atr, saving typing .get()
@@ -137,7 +136,13 @@ class ListView:
 	@log
 	def _map_colors(self):
 		"""Looks through self.atr, grabbing all attributes with 'color' inside
-		and then mapping them to a color pair number."""
+		and then mapping them to a color pair number.
+		Parameter to listview for colors -> (text_fore : "red"),(text_back : "blue")
+		Link color string names to curses colors -> {"red" : curses.COLOR_RED, "blue" : curses.COLOR_BLUE}
+		Int values from curses.COLOR* are only required for init_pair, otherwise, class only needs to reference pair number
+		Map values as in COLOR_PAIR_MAP {"text" : 1}
+		addstr uses "text" to get correct color pair from curses
+		"""
 		for atr in self.atr_dict: # Loop through self.atr
 			if "color" in atr: # Color only contained by values which set colors
 				pair_num = self.COLOR_PAIR_MAP.get(atr) # COLOR_MAP links the color key to a pair number for curses
