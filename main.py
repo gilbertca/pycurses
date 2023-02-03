@@ -144,9 +144,9 @@ class ListView:
 				if isinstance(color_value, int): # Default background is black if single color value
 					curses.init_pair(pair_num, color_value, self.DEFAULT_BACK)
 				elif color_value is None: # Default color with no values is white on black 
-					#curses.init_pair(pair_num, self.DEFAULT_TEXT, self.DEFAULT_BACK)
+					curses.init_pair(pair_num, self.DEFAULT_TEXT, self.DEFAULT_BACK)
 				else: # Apply both colors if a list of colors is provided
-					#curses.init_pair(pair_num, *color_value)
+					curses.init_pair(pair_num, *color_value)
 
 def main(stdscr):
 	"""
