@@ -33,6 +33,10 @@ class ListView:
 	def __init__(self, **atr):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
+		self.TEXT = parse_json(JSON_FILE_TEXT).get # Similar to atr, saving typing .get()
+		self.atr_dict = parse_json(JSON_FILE_WINDOW)
+		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
+		self.BACKGROUND_FILL = self.atr('background_fill') if self.atr('background_fill') is not None else ' '
 		self.DEFAULT_TEXT = curses.COLOR_BLACK
 		self.DEFAULT_BACK = curses.COLOR_WHITE
 		self.COLOR_PAIR_MAP = {
@@ -52,12 +56,11 @@ class ListView:
 		}
 		# self.color -> saves repeated typing of curses.color_pair(CURSES_...
 		self.color = lambda type : curses.color_pair(self.COLOR_PAIR_MAP.get(type))
-		self.TEXT = parse_json(JSON_FILE_TEXT).get # Similar to atr, saving typing .get()
-		self.atr_dict = parse_json(JSON_FILE_WINDOW)
-		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
-		# Temporary value:
+		# Temporary value to be replaced with a class specific method:
+		#	ListView will iterate through a given list, for example.
 		self.iterable = [n for n in self.atr_dict]
 		# Steps to create window:
+		# Note: all initializations must come before this point
 		self.create_window() # create a pad of fixed dimensions based on string keywords
 		self.draw_window() # draw text to screen
 
@@ -72,8 +75,8 @@ class ListView:
 
 	@log
 	def draw_window(self):
-		"""Draw the contents to self.screen"""
-		self.screen.bkgd(' ', curses.color_pair(2))
+		"""Render background, draw text, and then refresh screen."""
+		self.screen.bkgd(self.BACKGROUND_FILL, curses.color_pair(2))
 		for n in self.iterable:
 			if "c" in n:
 				color = self.color('important_color')
@@ -120,7 +123,7 @@ class ListView:
 		if topy >= 0 and boty >= 0:
 			self.topy = topy
 			self.boty = boty
-		if valign == 'center' or valign == None:
+		if valign == 'center' or valign == None: # Center is default alignment
 			center = math.floor(curses.LINES/2) # Always move up 1 from center if odd!
 			self.topy = center - math.floor(self.height/2) # Always move up 1!
 			self.boty = center + math.ceil(self.height/2) # Always move up 1!

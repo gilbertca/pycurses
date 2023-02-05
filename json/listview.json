@@ -1,9 +1,9 @@
 {
 	"valign" : "center",
 	"halign" : "center",
-	"height" : 30,
-	"width" : 40,
+	"height" : 40,
+	"width" : 50,
 	"text_color" : ["red","blue"],
 	"background_color" : ["white","magenta"],
-	"important_color" : "yellow"
+	"important_color" : ["yellow","black"]
 }
