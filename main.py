@@ -125,6 +125,7 @@ class ListView:
 		if valign == 'bottom':
 			self.topy = curses.LINES - 1
 			self.boty = curses.LINES - self.height
+
 	@log
 	def _calculate_window_halign(self):
 		"""Method run by create_window() to calculate topx and botx for draw_window()"""
