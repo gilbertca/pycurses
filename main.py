@@ -135,24 +135,19 @@ class ListView:
 
 	@log
 	def _map_colors(self):
-		"""Looks through self.atr, grabbing all attributes with 'color' inside
-		and then mapping them to a color pair number.
-		Parameter to listview for colors -> (text_fore : "red"),(text_back : "blue")
-		Link color string names to curses colors -> {"red" : curses.COLOR_RED, "blue" : curses.COLOR_BLUE}
-		Int values from curses.COLOR* are only required for init_pair, otherwise, class only needs to reference pair number
-		Map values as in COLOR_PAIR_MAP {"text" : 1}
-		addstr uses "text" to get correct color pair from curses
+		"""
+		Links colors to color pair integers
 		"""
 		for atr in self.atr_dict: # Loop through self.atr
 			if "color" in atr: # Color only contained by values which set colors
 				pair_num = self.COLOR_PAIR_MAP.get(atr) # COLOR_MAP links the color key to a pair number for curses
-				color_value = self.atr(atr) # Get actual assigned color value
-				if isinstance(color_value, int): # Default background is black if single color value
-					curses.init_pair(pair_num, color_value, self.DEFAULT_BACK)
-				elif color_value is None: # Default color with no values is white on black 
-					curses.init_pair(pair_num, self.DEFAULT_TEXT, self.DEFAULT_BACK)
-				else: # Apply both colors if a list of colors is provided
+				color_value = self.atr(atr) # Get assigned color value
+				if isinstance(color_value, list): # If list -> Assign [0] as fore and [1] as back
 					curses.init_pair(pair_num, *color_value)
+				elif isinstance(color_value, string): # If string -> Assign string as fore and back as black
+					curses.init_pair(pair_num, color_value, self.DEFAULT_BACK)
+				elif color_value is None: # If None -> Default white on black
+					curses.init_pair(pair_num, self.DEFAULT_TEXT, self.DEFAULT_BACK)
 
 def main(stdscr):
 	"""

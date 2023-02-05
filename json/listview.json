@@ -3,6 +3,6 @@
 	"halign" : "center",
 	"height" : 30,
 	"width" : 40,
-	"text_color" : "red",
-	"text_back" : "blue"
+	"text_color" : ["red","blue"],
+	"important_color" : "yellow"
 }
