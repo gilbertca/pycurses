@@ -73,9 +73,13 @@ class ListView:
 	@log
 	def draw_window(self):
 		"""Draw the contents to self.screen"""
-		self.screen.bkgd('?', curses.color_pair(2))
+		self.screen.bkgd(' ', curses.color_pair(2))
 		for n in self.iterable:
-			self.screen.addstr(f"{n}:{self.atr(n)}\n", self.color('text_color'))
+			if "c" in n:
+				color = self.color('important_color')
+			else:
+				color = self.color('text_color')
+			self.screen.addstr(f"{n}:{self.atr(n)}\n", color)
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
