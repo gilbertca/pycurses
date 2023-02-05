@@ -33,6 +33,8 @@ class ListView:
 	def __init__(self, **atr):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
+		self.DEFAULT_TEXT = curses.COLOR_BLACK
+		self.DEFAULT_BACK = curses.COLOR_WHITE
 		self.COLOR_PAIR_MAP = {
 			'text_color' : 1,
 			'background_color' : 2,
@@ -48,8 +50,8 @@ class ListView:
 			'cyan' : curses.COLOR_CYAN,
 			'white' : curses.COLOR_WHITE,
 		}
-		self.DEFAULT_TEXT = curses.COLOR_BLACK
-		self.DEFAULT_BACK = curses.COLOR_WHITE
+		# self.color -> saves repeated typing of curses.color_pair(CURSES_...
+		self.color = lambda type : curses.color_pair(self.COLOR_PAIR_MAP.get(type))
 		self.TEXT = parse_json(JSON_FILE_TEXT).get # Similar to atr, saving typing .get()
 		self.atr_dict = parse_json(JSON_FILE_WINDOW)
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
@@ -72,7 +74,7 @@ class ListView:
 	def draw_window(self):
 		"""Draw the contents to self.screen"""
 		for n in self.iterable:
-			self.screen.addstr(f"{n}:{self.atr(n)}\n", self.COLOR_PAIR_MAP.get('text_color'))
+			self.screen.addstr(f"{n}:{self.atr(n)}\n", self.color('text_color'))
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
