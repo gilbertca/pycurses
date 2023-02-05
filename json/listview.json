@@ -4,5 +4,6 @@
 	"height" : 30,
 	"width" : 40,
 	"text_color" : ["red","blue"],
+	"background_color" : ["white","magenta"],
 	"important_color" : "yellow"
 }
