@@ -89,31 +89,29 @@ class ListView:
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
 		# Height calculations:
-		height = self.atr('height') if self.atr('height') is not None else -1 # -1 required for conditionals
-		vborder = self.atr('vborder') if self.atr('vborder') is not None else -1 # -1 required for conditionals
-		vpercent = self.atr('vpercent') if self.atr('vpercent') is not None else -1 # -1 required for conditionals
-		# TODO: Check else statements for truthiness
-		if height == -1  and vborder == -1: # No border / No height case
-			self.height = curses.LINES
-		elif height == -1  and vborder >= 0: # Border only case
-			self.height = curses.LINES - (2 * vborder)
-		elif height > 0 and vborder == -1: # Height only case
+		height = self.atr('height')
+		vborder = self.atr('vborder')
+		vpercent = self.atr('vpercent')
+		if height: # If given height:
 			self.height = height
-		else: # Error case: cannot have height and border
-			raise ValueError
+		elif vborder: # If given vborder:
+			self.height = curses.LINES - (2 * vborder)
+		elif vpercent:
+			self.height = math.floor(curses.LINES * vpercent / 100)
+		else: # Default: full height
+			self.height = curses.LINES
 		# Width calculations:
-		width = self.atr('width') if self.atr('width') is not None else -1 # -1 required for conditionals
-		hborder = self.atr('hborder') if self.atr('hborder') is not None else -1 # -1 required for conditionals
-		hpercent = self.atr('hpercent') if self.atr('hpercent') is not None else -1 # -1 required for conditionaltops
-		# TODO: Check else statements for truthiness
-		if width == -1 and hborder == -1: # No border / No height case
-			self.width = curses.COLS
-		elif width == -1 and hborder >= 0: # Border only case
-			self.width = curses.COLS - (2 * hborder)
-		elif width > 0 and hborder == -1: # Height only case
+		width = self.atr('width')
+		hborder = self.atr('hborder')
+		hpercent = self.atr('hpercent')
+		if width: # No border / No height case
 			self.width = width
-		else: # Error case: cannot have height and border
-			raise ValueError
+		elif hborder: # Border only case
+			self.width = curses.COLS - (2 * hborder)
+		elif hpercent: # Height only case
+			self.width = math.floor(curses.COLS * hpercent / 100)
+		else: # Default to full width 
+			self.width = curses.COLS
 
 	@log
 	def _calculate_window_valign(self):
