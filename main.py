@@ -88,11 +88,9 @@ class ListView:
 	@log
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
-		height = self.atr('height') if self.atr('height') is not None else -1
-		width = self.atr('width') if self.atr('width') is not None else -1
-		vborder = self.atr('vborder') if self.atr('vborder') is not None else -1
-		hborder = self.atr('hborder') if self.atr('hborder') is not None else -1
 		# Height calculations:
+		height = self.atr('height') if self.atr('height') is not None else -1
+		vborder = self.atr('vborder') if self.atr('vborder') is not None else -1
 		# TODO: Check else statements for truthiness
 		if height == -1  and vborder == -1: # No border / No height case
 			self.height = curses.LINES
@@ -103,6 +101,8 @@ class ListView:
 		else: # Error case: cannot have height and border
 			raise ValueError("Can not define a custom height AND vertical border or height=0.")
 		# Width calculations:
+		width = self.atr('width') if self.atr('width') is not None else -1
+		hborder = self.atr('hborder') if self.atr('hborder') is not None else -1
 		# TODO: Check else statements for truthiness
 		if width == -1 and hborder == -1: # No border / No height case
 			self.width = curses.COLS
