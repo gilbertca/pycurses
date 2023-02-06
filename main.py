@@ -89,8 +89,8 @@ class ListView:
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
 		# Height calculations:
-		height = self.atr('height') if self.atr('height') is not None else -1
-		vborder = self.atr('vborder') if self.atr('vborder') is not None else -1
+		height = self.atr('height') if self.atr('height') is not None else -1 # -1 required for conditionals
+		vborder = self.atr('vborder') if self.atr('vborder') is not None else -1 # -1 required for conditionals
 		# TODO: Check else statements for truthiness
 		if height == -1  and vborder == -1: # No border / No height case
 			self.height = curses.LINES
@@ -99,10 +99,10 @@ class ListView:
 		elif height > 0 and vborder == -1: # Height only case
 			self.height = height
 		else: # Error case: cannot have height and border
-			raise ValueError("Can not define a custom height AND vertical border or height=0.")
+			raise ValueError
 		# Width calculations:
-		width = self.atr('width') if self.atr('width') is not None else -1
-		hborder = self.atr('hborder') if self.atr('hborder') is not None else -1
+		width = self.atr('width') if self.atr('width') is not None else -1 # -1 required for conditionals
+		hborder = self.atr('hborder') if self.atr('hborder') is not None else -1 # -1 required for conditionals
 		# TODO: Check else statements for truthiness
 		if width == -1 and hborder == -1: # No border / No height case
 			self.width = curses.COLS
@@ -111,14 +111,14 @@ class ListView:
 		elif width > 0 and hborder == -1: # Height only case
 			self.width = width
 		else: # Error case: cannot have height and border
-			raise ValueError("Can not define a custom width AND horizontal borders, or width=0.")
+			raise ValueError
 
 	@log
 	def _calculate_window_valign(self):
 		"""Method run by create_window() to calculate topy and boty for draw_window()"""
 		# Note: assignment of -1 is to prevent type errors when comparing int to nonetype
-		topy = self.atr('topy') if self.atr('topy') is not None else -1
-		boty = self.atr('boty') if self.atr('boty') is not None else -1
+		topy = self.atr('topy') if self.atr('topy') is not None else -1 # -1 required for conditionals
+		boty = self.atr('boty') if self.atr('boty') is not None else -1 # -1 required for conditionals
 		valign = self.atr('valign')
 		if topy >= 0 and boty >= 0:
 			self.topy = topy
@@ -137,8 +137,8 @@ class ListView:
 	@log
 	def _calculate_window_halign(self):
 		"""Method run by create_window() to calculate topx and botx for draw_window()"""
-		leftx = self.atr('leftx') if self.atr('leftx') is not None else -1
-		rightx = self.atr('rightx') if self.atr('rightx') is not None else -1
+		leftx = self.atr('leftx') if self.atr('leftx') is not None else -1 # -1 required for conditionals
+		rightx = self.atr('rightx') if self.atr('rightx') is not None else -1 # -1 required for conditionals
 		halign = self.atr('halign')
 		if leftx >= 0 and rightx >= 0:
 			self.leftx = leftx
