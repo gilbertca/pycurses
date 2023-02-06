@@ -4,9 +4,8 @@ from datetime import datetime
 
 def parse_json(file_name):
 	"""Simple utility to read from a JSON file returns a dict object"""
-	json_file = open(file_name)
-	data = json.load(json_file)
-	json_file.close()
+	with open(file_name) as json_file:
+		data = json.load(json_file)
 	return data
 
 def log(function):
