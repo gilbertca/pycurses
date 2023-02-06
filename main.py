@@ -91,6 +91,7 @@ class ListView:
 		# Height calculations:
 		height = self.atr('height') if self.atr('height') is not None else -1 # -1 required for conditionals
 		vborder = self.atr('vborder') if self.atr('vborder') is not None else -1 # -1 required for conditionals
+		vpercent = self.atr('vpercent') if self.atr('vpercent') is not None else -1 # -1 required for conditionals
 		# TODO: Check else statements for truthiness
 		if height == -1  and vborder == -1: # No border / No height case
 			self.height = curses.LINES
@@ -103,6 +104,7 @@ class ListView:
 		# Width calculations:
 		width = self.atr('width') if self.atr('width') is not None else -1 # -1 required for conditionals
 		hborder = self.atr('hborder') if self.atr('hborder') is not None else -1 # -1 required for conditionals
+		hpercent = self.atr('hpercent') if self.atr('hpercent') is not None else -1 # -1 required for conditionaltops
 		# TODO: Check else statements for truthiness
 		if width == -1 and hborder == -1: # No border / No height case
 			self.width = curses.COLS
