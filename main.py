@@ -117,10 +117,10 @@ class ListView:
 	def _calculate_window_valign(self):
 		"""Method run by create_window() to calculate topy and boty for draw_window()"""
 		# Note: assignment of -1 is to prevent type errors when comparing int to nonetype
-		topy = self.atr('topy') if self.atr('topy') is not None else -1 # -1 required for conditionals
-		boty = self.atr('boty') if self.atr('boty') is not None else -1 # -1 required for conditionals
+		topy = self.atr('topy')
+		boty = self.atr('boty')
 		valign = self.atr('valign')
-		if topy >= 0 and boty >= 0:
+		if topy and boty:
 			self.topy = topy
 			self.boty = boty
 		if valign == 'center' or valign == None: # Center is default alignment
@@ -137,10 +137,10 @@ class ListView:
 	@log
 	def _calculate_window_halign(self):
 		"""Method run by create_window() to calculate topx and botx for draw_window()"""
-		leftx = self.atr('leftx') if self.atr('leftx') is not None else -1 # -1 required for conditionals
-		rightx = self.atr('rightx') if self.atr('rightx') is not None else -1 # -1 required for conditionals
+		leftx = self.atr('leftx')
+		rightx = self.atr('rightx')
 		halign = self.atr('halign')
-		if leftx >= 0 and rightx >= 0:
+		if leftx and rightx:
 			self.leftx = leftx
 			self.rightx = rightx
 		if halign == 'center' or halign == None:
