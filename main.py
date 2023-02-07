@@ -146,7 +146,7 @@ class ListView:
 		if halign == 'center' or halign == None:
 			center = math.floor(curses.COLS/2) # Always move left 1 from center if odd!
 			self.leftx = center - math.floor(self.width/2) # Alwas move left 1!
-			self.rightx = center + math.ceil(self.height/2) # Always move left 1!
+			self.rightx = center + math.ceil(self.width/2) # Always move left 1!
 		if halign == 'left':
 			self.leftx = 0
 			self.rightx = 0 + self.width - 1
