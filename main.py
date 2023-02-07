@@ -20,12 +20,11 @@ class Scrollable:
 
 class ListView:
 	"""
-	A class to display a curses list given a window/pad object, and a list
-	Also accepts several key word parameters
-	The object can be created as a list, or as a pad
-	Like half, quarter, third, etc.
-	Also top, bottom, left right, center
-	Width can be a keyword string, or a numeric value
+	A class to display a list given an arbitrary keyword list of attributes.
+	A list of keywords can be found in 'keywords.txt'
+	Also top, bottom, left right, center,
+	Width can be a keyword string, or a numeric value.
+	Note that some keyword configurations may overwrite each other
 	"""
 	# More to be added as more requirements are needed
 	# Also need to be able to generate arbitrary color mappings
