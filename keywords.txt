@@ -9,3 +9,6 @@ height = int -> height of display on screen ! can not be used with vborder since
 halign = string('center','left','right') -> automatically calculate top and bot x values
 hborder =  int,(TODO: ratios) -> Distance between surrounding elements, (TODO: controllers) 
 width = int -> width of display on screen ! can not be used with hborder since hborder calculates width
+padding = int  -> distance between edges of window and content defaults to 0
+hpadding = int -> padding but in x direction defaults to 0
+vpadding = int -> padding but in y direction defaults to 0

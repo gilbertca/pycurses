@@ -159,7 +159,7 @@ class AbstractBaseView:
 					# Need to relate list values to CURSES_COLOR_MAP
 					colors = [self.CURSES_COLOR_MAP.get(color) for color in color_value]
 					curses.init_pair(pair_num, *colors)
-				elif isinstance(color_value, str): # If string -> Assign string as fore and back as black
+				elif isinstance(color_value, str): # If string -> Assign string as fore and back as self.DEFAULT_BACK
 					# Need to relate string value to CURSES_COLOR_MAP
 					color = self.CURSES_COLOR_MAP.get(color_value)
 					curses.init_pair(pair_num, color, self.DEFAULT_BACK)
