@@ -15,7 +15,7 @@ def log(function):
 		logging.debug(f"{datetime.now()} Function: * {function.__name__} * from: * {function.__globals__.get('__file__')} *")
 		logging.info(f"{datetime.now()} Attempting {function.__name__}.")
 		try: # For unhandleable exceptions
-			function(*args, **kwargs)
+			return function(*args, **kwargs)
 		except Exception as e: # For unhandleable exceptions
 			logging.critical(f"*Critical error* * {datetime.now()} * with * {function.__name__} * due to {e}")
 			raise

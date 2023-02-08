@@ -81,17 +81,22 @@ class ListView:
 		vpadding = self.atr('vpadding') if self.atr('vpadding') else 0
 		lines_written = 0
 		for n in self.iterable:
-			if "c" in n:
-				color = self.color('important_color')
-			else:
-				color = self.color('text_color')
+			color = self._determine_color(n)
 			if padding:
 				self.screen.addstr(lines_written+padding,padding,f"{n}:{self.atr(n)}\n", color)
 			else:
 				self.screen.addstr(lines_written+vpadding,hpadding,f"{n}:{self.atr(n)}\n", color)	
 			lines_written += 1
-				
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
+
+	@log
+	def _determine_color(self, string):
+		"""Method to run checks on 'string' to return a color"""
+		if "c" in string:
+			color = self.color('important_color')
+		else:
+			color = self.color('text_color')
+		return color
 
 	@log
 	def _calculate_size(self):
