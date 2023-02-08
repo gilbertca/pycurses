@@ -4,7 +4,7 @@ import logging
 from utils import parse_json, log
 from baseview import AbstractBaseView
 
-lass ListView(AbstractBaseView):
+class ListView(AbstractBaseView):
 	"""
 	A class to display a list given an arbitrary keyword list of attributes.
 	A list of keywords can be found in 'keywords.txt'
