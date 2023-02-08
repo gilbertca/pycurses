@@ -59,14 +59,14 @@ class AbstractBaseView:
 		"""
 		To be overloaded by child.
 		"""
-		pass
+		raise Exception(f"This method must be overloaded by it's child.")
 
 	@log
 	def _determine_color(self, string):
 		"""
 		To be overloaded by child.
 		"""
-		pass
+		raise Exception(f"This method must be overloaded by it's child.")
 
 	@log
 	def _calculate_size(self):
