@@ -76,12 +76,21 @@ class ListView:
 	def draw_window(self):
 		"""Render background, draw text, and then refresh screen."""
 		self.screen.bkgd(self.BACKGROUND_FILL, curses.color_pair(2))
+		padding = self.atr('padding') if self.atr('padding') else 0
+		hpadding = self.atr('hpadding') if self.atr('hpadding') else 0
+		vpadding = self.atr('vpadding') if self.atr('vpadding') else 0
+		lines_written = 0
 		for n in self.iterable:
 			if "c" in n:
 				color = self.color('important_color')
 			else:
 				color = self.color('text_color')
-			self.screen.addstr(f"{n}:{self.atr(n)}\n", color)
+			if padding:
+				self.screen.addstr(lines_written+padding,padding,f"{n}:{self.atr(n)}\n", color)
+			else:
+				self.screen.addstr(lines_written+vpadding,hpadding,f"{n}:{self.atr(n)}\n", color)	
+			lines_written += 1
+				
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log

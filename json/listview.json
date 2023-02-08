@@ -1,9 +1,10 @@
 {
 	"valign" : "center",
 	"halign" : "center",
-	"vpercent" : 100,
-	"hpercent" : 100,
+	"vpercent" : 90,
+	"hpercent" : 90,
 	"text_color" : ["red","blue"],
 	"background_color" : ["white","magenta"],
-	"important_color" : ["yellow","black"]
+	"important_color" : ["yellow","black"],
+	"padding" : 5 
 }
