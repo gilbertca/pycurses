@@ -62,7 +62,7 @@ class AbstractBaseView:
 		raise Exception(f"This method must be overloaded by it's child.")
 
 	@log
-	def _determine_color(self, string):
+	def determine_color(self, string):
 		"""
 		To be overloaded by child.
 		"""
@@ -136,6 +136,15 @@ class AbstractBaseView:
 		if halign == 'right':
 			self.leftx = curses.COLS - 1
 			self.rightx = curses.COLS - width
+
+	@log
+	def _get_padding(self):
+		padding = self.atr('padding') if self.atr('padding') else 0
+		hpadding = self.atr('hpadding') if self.atr('hpadding') else 0
+		vpadding = self.atr('vpadding') if self.atr('vpadding') else 0
+		if padding:
+			vpadding = hpadding = padding
+		return vpadding,hpadding
 
 	@log
 	def _map_colors(self):

@@ -19,21 +19,16 @@ class ListView(AbstractBaseView):
 	def draw_window(self):
 		"""Render background, draw text, and then refresh screen."""
 		self.screen.bkgd(self.BACKGROUND_FILL, curses.color_pair(2))
-		padding = self.atr('padding') if self.atr('padding') else 0
-		hpadding = self.atr('hpadding') if self.atr('hpadding') else 0
-		vpadding = self.atr('vpadding') if self.atr('vpadding') else 0
+		vpadding,hpadding = self._get_padding()
 		lines_written = 0
 		for n in self.iterable:
-			color = self._determine_color(n)
-			if padding:
-				self.screen.addstr(lines_written+padding,padding,f"{n}:{self.atr(n)}\n", color)
-			else: # NOTE: IF PADDING==0 THEN THIS FOLLOWING LINE WILL BE RUN REGARDLESS OF VPAD AND HPAD
-				self.screen.addstr(lines_written+vpadding,hpadding,f"{n}:{self.atr(n)}\n", color)	
+			color = self.determine_color(n)
+			self.screen.addstr(lines_written+vpadding,hpadding,f"{n}:{self.atr(n)}\n", color)	
 			lines_written += 1
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
-	def _determine_color(self, string):
+	def determine_color(self, string):
 		""" Method to run checks on 'string' to return a color
 			Intended to be overloaded by child classes.
 			*NOTE* ALL CODE CURRENTLY IN THIS METHOD IS TEMPORARY
@@ -43,6 +38,7 @@ class ListView(AbstractBaseView):
 		else:
 			color = self.color('text_color')
 		return color
+
 
 
 def main(stdscr):
