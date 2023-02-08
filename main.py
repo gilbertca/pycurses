@@ -91,7 +91,10 @@ class ListView:
 
 	@log
 	def _determine_color(self, string):
-		"""Method to run checks on 'string' to return a color"""
+		""" Method to run checks on 'string' to return a color
+			Intended to be overloaded by child classes.
+			*NOTE* ALL CODE CURRENTLY IN THIS METHOD IS TEMPORARY
+		"""
 		if "c" in string:
 			color = self.color('important_color')
 		else:
