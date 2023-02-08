@@ -27,7 +27,7 @@ lass ListView(AbstractBaseView):
 			color = self._determine_color(n)
 			if padding:
 				self.screen.addstr(lines_written+padding,padding,f"{n}:{self.atr(n)}\n", color)
-			else:
+			else: # NOTE: IF PADDING==0 THEN THIS FOLLOWING LINE WILL BE RUN REGARDLESS OF VPAD AND HPAD
 				self.screen.addstr(lines_written+vpadding,hpadding,f"{n}:{self.atr(n)}\n", color)	
 			lines_written += 1
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
