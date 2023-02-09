@@ -51,4 +51,5 @@ def main(stdscr):
 
 if __name__ == "__main__":
 	curses.wrapper(main)
+	*NOTE* ALL CODE CURRENTLY IN THIS METHOD IS TEMPORARY
 	print("Success!")
