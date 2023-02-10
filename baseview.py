@@ -3,19 +3,16 @@ import math
 import logging
 from utils import parse_json, log
 
-JSON_FILE_TEXT = "TEXT.json"
-JSON_FILE_WINDOW = "json/listview.json"
 
 class AbstractBaseView:
 	"""
 	An abstraction from which all views will inherit.
 	Contains methods which must be overloaded by its children
 	"""
-	def __init__(self, **atr):
+	def __init__(self, FILE, **atr):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
-		self.TEXT = parse_json(JSON_FILE_TEXT).get # Similar to atr, saving typing .get()
-		self.atr_dict = parse_json(JSON_FILE_WINDOW)
+		self.atr_dict = FILE # Contains all attributes
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
 		self.BACKGROUND_FILL = self.atr('background_fill') if self.atr('background_fill') is not None else ' '
 		self.DEFAULT_TEXT = curses.COLOR_BLACK
@@ -134,8 +131,8 @@ class AbstractBaseView:
 			self.leftx = 0
 			self.rightx = 0 + self.width - 1
 		if halign == 'right':
-			self.leftx = curses.COLS - 1
-			self.rightx = curses.COLS - width
+			self.leftx = curses.COLS - self.width
+			self.rightx = curses.COLS - 1
 
 	@log
 	def _get_padding(self):

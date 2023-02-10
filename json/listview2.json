@@ -1,0 +1,8 @@
+{
+	"width" : 20,
+	"height" : 10,
+	"valign" : "top",
+	"halign" : "right",
+	"text_color" : ["black","white"],
+	"background_color" : ["cyan","cyan"]
+}

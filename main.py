@@ -4,6 +4,8 @@ import logging
 from utils import parse_json, log
 from baseview import AbstractBaseView
 
+JSON_FILE1 = "json/listview1.json"
+JSON_FILE2 = "json/listview2.json"
 class ListView(AbstractBaseView):
 	"""
 	A class to display a list given an arbitrary keyword list of attributes.
@@ -45,8 +47,11 @@ def main(stdscr):
 	"""
 	A method for testing the view
 	"""
-	listview = ListView()
-	listview.screen.getch()
+	listatr1 = parse_json(JSON_FILE1)
+	listatr2 = parse_json(JSON_FILE2)
+	listview = ListView(listatr1)
+	listview2 = ListView(listatr2)
+	listview2.screen.getch()
 	return 0
 
 if __name__ == "__main__":

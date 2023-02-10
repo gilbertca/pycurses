@@ -1,0 +1,3 @@
+Issue with halign not having programmed width
+Issue with _map_colors and single colors
+Issue where new arbitrary color pairs need to be generated due to curses changing all color pair definitions
