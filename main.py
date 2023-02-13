@@ -50,6 +50,7 @@ def main(stdscr):
 	listatr1 = parse_json(JSON_FILE1)
 	listatr2 = parse_json(JSON_FILE2)
 	listview = ListView(listatr1)
+	listview.screen.getch()
 	listview2 = ListView(listatr2)
 	listview2.screen.getch()
 	return 0
