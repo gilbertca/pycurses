@@ -1,4 +1,4 @@
-from main.py import ListView
+from main import ListView
 
 
 class Controller:
@@ -12,3 +12,6 @@ class Controller:
 
 	def add_view(self, view):
 		self.view_list.update(view)
+
+	def map_colors(self, colors):
+		pass
