@@ -5,6 +5,7 @@ from utils import parse_json
 
 JSON_FILE1 = "json/listview1.json"
 JSON_FILE2 = "json/listview2.json"
+CONTROLLER = None
 def main(stdscr):
 	"""
 	A method for testing the view
@@ -18,8 +19,11 @@ def main(stdscr):
 		"listview2" : listview2
 	}
 	controller = Controller(listviewdict)
-	listview1.screen.getch()
+	global CONTROLLER
+	CONTROLLER = controller
+	controller.get_view("listview1").screen.getch()
 	return 0
 
 if __name__ == "__main__":
 	curses.wrapper(main)
+	print(CONTROLLER.views_dict)
