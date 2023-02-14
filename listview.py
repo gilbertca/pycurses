@@ -33,8 +33,5 @@ class ListView(AbstractBaseView):
 		Method to run checks on 'string' to return a color
 		THIS CURRENT CODE IS TEMPORARY
 		"""
-		if "c" in string:
-			color = self.color('important_color')
-		else:
-			color = self.color('text_color')
+		color = self.color('text_color')
 		return color
