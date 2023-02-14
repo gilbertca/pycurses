@@ -15,13 +15,9 @@ class AbstractBaseView:
 		self.atr_dict = FILE # Contains all attributes
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
 		self.BACKGROUND_FILL = self.atr('background_fill') if self.atr('background_fill') is not None else ' '
-		self.DEFAULT_TEXT = curses.COLOR_WHITE
-		self.DEFAULT_BACK = curses.COLOR_BLACK
-		self.COLOR_PAIR_MAP = {
-			'text_color' : 1,
-			'background_color' : 2,
-			'important_color' : 3,
-		}
+		self.DEFAULT_TEXT = curses.COLOR_WHITE # Move this?
+		self.DEFAULT_BACK = curses.COLOR_BLACK # Move this?
+		self.COLOR_PAIR_MAP = {}
 		self.CURSES_COLOR_MAP = {
 			'black' : curses.COLOR_BLACK,
 			'red' : curses.COLOR_RED,
@@ -45,7 +41,6 @@ class AbstractBaseView:
 		self._calculate_size()
 		self._calculate_window_valign()
 		self._calculate_window_halign()
-		self._map_colors() # init color pairs for use using provided string keywords
 		self.screen = curses.newpad(self.height, self.width)
 	
 	@log
@@ -139,23 +134,3 @@ class AbstractBaseView:
 		if padding:
 			vpadding = hpadding = padding
 		return vpadding,hpadding
-
-	@log
-	def _map_colors(self):
-		"""
-		Links colors to color pair integers
-		"""
-		for atr in self.atr_dict: # Loop through self.atr
-			if "color" in atr: # Color only contained by values which set colors
-				color_value = self.atr(atr) # Get color list/string from self.atr
-				pair_num = self.COLOR_PAIR_MAP.get(atr) # COLOR_MAP links the color key to a pair number for curses
-				if isinstance(color_value, list): # If list -> Assign [0] as fore and [1] as back
-					# Need to relate list values to CURSES_COLOR_MAP
-					colors = [self.CURSES_COLOR_MAP.get(color) for color in color_value]
-					curses.init_pair(pair_num, *colors)
-				elif isinstance(color_value, str): # If string -> Assign string as fore and back as self.DEFAULT_BACK
-					# Need to relate string value to CURSES_COLOR_MAP
-					color = self.CURSES_COLOR_MAP.get(color_value)
-					curses.init_pair(pair_num, color, self.DEFAULT_BACK)
-				elif color_value is None: # If None -> Default white on black
-					curses.init_pair(pair_num, self.DEFAULT_TEXT, self.DEFAULT_BACK)
