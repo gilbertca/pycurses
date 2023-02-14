@@ -21,7 +21,8 @@ def main(stdscr):
 	controller = Controller(listviewdict)
 	global CONTROLLER
 	CONTROLLER = controller
-	controller.get_view("listview1").screen.getch()
+	controller.draw_view("listview2")
+	controller.get_view("listview2").screen.getch()
 	return 0
 
 if __name__ == "__main__":

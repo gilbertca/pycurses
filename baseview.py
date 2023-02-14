@@ -15,8 +15,8 @@ class AbstractBaseView:
 		self.atr_dict = FILE # Contains all attributes
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
 		self.BACKGROUND_FILL = self.atr('background_fill') if self.atr('background_fill') is not None else ' '
-		self.DEFAULT_TEXT = curses.COLOR_BLACK
-		self.DEFAULT_BACK = curses.COLOR_WHITE
+		self.DEFAULT_TEXT = curses.COLOR_WHITE
+		self.DEFAULT_BACK = curses.COLOR_BLACK
 		self.COLOR_PAIR_MAP = {
 			'text_color' : 1,
 			'background_color' : 2,
@@ -34,13 +34,10 @@ class AbstractBaseView:
 		}
 		# self.color -> saves repeated typing of curses.color_pair(CURSES_...
 		self.color = lambda type : curses.color_pair(self.COLOR_PAIR_MAP.get(type))
+		#
 		# Temporary value to be replaced with a class specific method:
 		#	ListView will iterate through a given list, for example.
 		self.iterable = [n for n in self.atr_dict]
-		# Steps to create window:
-		# Note: all initializations must come before this point
-		self.create_window() # create a pad of fixed dimensions based on string keywords
-		self.draw_window() # draw text to screen
 
 	@log
 	def create_window(self):

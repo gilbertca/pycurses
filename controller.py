@@ -13,6 +13,10 @@ class Controller:
 	def add_view(self, view_dict):
 		self.views_dict.update(view_dict)
 
+	def draw_view(self, view_name):
+		self.views(view_name).create_window()
+		self.views(view_name).draw_window()
+
 	def get_view(self, view_name):
 		return self.views(view_name)
 
