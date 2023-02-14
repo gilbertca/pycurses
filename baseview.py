@@ -18,15 +18,6 @@ class AbstractBaseView:
 		self.BACKGROUND_FILL = self.atr('background_fill') if self.atr('background_fill') is not None else ' '
 		self.DEFAULT_TEXT = self.atr('default_text') if self.atr('default_text') is not None else curses.COLOR_BLACK
 		self.DEFAULT_BACK = self.atr('default_back') if self.atr('default_back') is not None else curses.COLOR_WHITE
-		# COLOR_PAIR_MAP maps a key (such as 'text_color') to an integer
-		#	The integer represents a curses color pair usable by curses.color_pair(...)
-		#	Usage is demonstrated by self.color
-		self.color_pair_map = {}
-		# self.color -> saves repeated typing of curses.color_pair(CURSES_...
-		self.color = lambda key : curses.color_pair(self.COLOR_PAIR_MAP.get(key))
-		#
-		# Temporary value to be replaced with a class specific method:
-		#	ListView will iterate through a given list, for example.
 		self.iterable = [n for n in self.atr_dict]
 
 	@log
