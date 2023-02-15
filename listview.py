@@ -18,7 +18,7 @@ class ListView(AbstractBaseView):
 	@log
 	def draw_window(self):
 		"""Render background, draw text, and then refresh screen."""
-		self.screen.bkgd(self.BACKGROUND_FILL, curses.color_pair(0))
+		self.screen.bkgd(".", curses.color_pair(0))
 		vpadding,hpadding = self._get_padding()
 		lines_written = 0
 		for n in self.iterable:
