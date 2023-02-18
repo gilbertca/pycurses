@@ -9,11 +9,13 @@ def main(stdscr):
 	"""
 	A method for testing the view
 	"""
+	# Required:
 	controller = Controller()
-	listatr1 = parse_json(JSON_FILE1)
-	listview1 = ListView(controller, listatr1)
-	dict = {"listview1":listview1}
-	controller.add_view(dict)
+	# Arbitrary data:
+	view_name = "listview"
+	view_dict = parse_json(JSON_FILE1)
+	# To draw views:
+	controller.create_view(view_name, view_dict, ListView)
 	controller.draw_view("listview1")
 	controller.get_view("listview1").screen.getch()
 	return 0

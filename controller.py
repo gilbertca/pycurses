@@ -22,8 +22,10 @@ class Controller:
 		self.views_dict = {}
 		self.views = self.views_dict.get
 
-	def add_view(self, view_dict):
-		self.views_dict.update(view_dict)
+	def create_view(self, view_name, view_atr, ViewClass):
+		"""Takes a string name, a dictionary of attributes, and a Class reference to instantiate the view as."""
+		view = ViewClass(view_atr)
+		self.views_dict.update({view_name : view})
 
 	def draw_view(self, view_name):
 		self.views(view_name).create_window()
