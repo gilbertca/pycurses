@@ -21,8 +21,8 @@ class ListView(AbstractBaseView):
 		self.screen.bkgd(".", curses.color_pair(0))
 		vpadding,hpadding = self._get_padding()
 		lines_written = 0
-		for n in self.iterable:
-			self.screen.addstr(lines_written+vpadding,hpadding,f"{n}:{self.atr(n)}\n")	
+		for item in self.iterable:
+			self.screen.addstr(lines_written+vpadding,hpadding,f"{item}:{self.atr(item)}\n")	
 			lines_written += 1
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 

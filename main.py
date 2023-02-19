@@ -13,11 +13,11 @@ def main(stdscr):
 	controller = Controller()
 	# Arbitrary data:
 	view_name = "listview"
-	view_dict = parse_json(JSON_FILE1)
+	view_atr = parse_json(JSON_FILE1)
 	# To draw views:
-	controller.create_view(view_name, view_dict, ListView)
-	controller.draw_view("listview1")
-	controller.get_view("listview1").screen.getch()
+	controller.create_view(view_name, view_atr, ListView)
+	controller.draw_view("listview")
+	controller.get_view("listview").screen.getch()
 	return 0
 
 if __name__ == "__main__":

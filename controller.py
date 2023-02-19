@@ -24,7 +24,7 @@ class Controller:
 
 	def create_view(self, view_name, view_atr, ViewClass):
 		"""Takes a string name, a dictionary of attributes, and a Class reference to instantiate the view as."""
-		view = ViewClass(view_atr)
+		view = ViewClass(self, **view_atr)
 		self.views_dict.update({view_name : view})
 
 	def draw_view(self, view_name):

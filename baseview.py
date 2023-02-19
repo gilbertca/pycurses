@@ -9,11 +9,11 @@ class AbstractBaseView:
 	An abstraction from which all views will inherit.
 	Contains methods which must be overloaded by its children
 	"""
-	def __init__(self, controller, FILE, **atr):
+	def __init__(self, controller, **atr):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
 		self.controller = controller # References parent controller
-		self.atr_dict = FILE # Contains all attributes
+		self.atr_dict = atr # Contains all attributes
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
 		self.BACKGROUND_FILL = self.atr('background_fill') if self.atr('background_fill') is not None else ' '
 		self.DEFAULT_TEXT = self.atr('default_text') if self.atr('default_text') is not None else curses.COLOR_BLACK
