@@ -13,7 +13,7 @@ def log(function):
 	def log(*args, **kwargs):
 		# String extractions done here:
 		logging.debug(f"{datetime.now()} Function: * {function.__name__} * from: * {function.__globals__.get('__file__')} *")
-		logging.info(f"{datetime.now()} Attempting {function.__name__}.")
+		#logging.info(f"{datetime.now()} Attempting {function.__name__}.")
 		try: # For unhandleable exceptions
 			return function(*args, **kwargs)
 		except Exception as e: # For unhandleable exceptions
