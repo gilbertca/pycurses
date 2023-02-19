@@ -7,7 +7,7 @@ class Controller:
 	Controller needs to map colors in order to keep track of arbitrary number of color pairs.
 	Controller needs to call draw methods for view objects
 	"""
-	def __init__(self, views_dict=None):
+	def __init__(self, views_dict=None, **atr):
 		self.CURSES_COLOR_MAP = {
 			'black' : curses.COLOR_BLACK,
 			'red' : curses.COLOR_RED,
@@ -18,6 +18,9 @@ class Controller:
 			'cyan' : curses.COLOR_CYAN,
 			'white' : curses.COLOR_WHITE,
 		}
+		self.BACKGROUND_FILL = atr.get('background_fill') if atr.get('background_fill') is not None else ' '
+		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_BLACK
+		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_WHITE
 		self.colors = {}
 		self.views_dict = {}
 		self.views = self.views_dict.get

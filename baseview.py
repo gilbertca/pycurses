@@ -15,9 +15,6 @@ class AbstractBaseView:
 		self.controller = controller # References parent controller
 		self.atr_dict = atr # Contains all attributes
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
-		self.BACKGROUND_FILL = self.atr('background_fill') if self.atr('background_fill') is not None else ' '
-		self.DEFAULT_TEXT = self.atr('default_text') if self.atr('default_text') is not None else curses.COLOR_BLACK
-		self.DEFAULT_BACK = self.atr('default_back') if self.atr('default_back') is not None else curses.COLOR_WHITE
 		self.iterable = [n for n in self.atr_dict]
 
 	@log
