@@ -1,6 +1,8 @@
 import curses
+import logging
 from listview import ListView
 from baseview import AbstractBaseView
+from utils import log
 
 class Controller:
 	"""
@@ -8,6 +10,7 @@ class Controller:
 	Controller needs to call draw methods for view objects
 	"""
 	def __init__(self, views_dict=None, **atr):
+		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		self.CURSES_COLOR_MAP = {
 			'black' : curses.COLOR_BLACK,
 			'red' : curses.COLOR_RED,
@@ -25,18 +28,22 @@ class Controller:
 		self.views_dict = {}
 		self.views = self.views_dict.get
 
+	@log
 	def create_view(self, view_name, view_atr, ViewClass):
 		"""Takes a string name, a dictionary of attributes, and a Class reference to instantiate the view as."""
 		view = ViewClass(self, **view_atr)
 		self.views_dict.update({view_name : view})
 
+	@log
 	def draw_view(self, view_name):
 		self.views(view_name).create_window()
 		self.views(view_name).draw_window()
 
+	@log
 	def get_view(self, view_name):
 		return self.views(view_name)
 
+	@log
 	def map_colors(self):
 		"""
 		Links colors to color pair integers

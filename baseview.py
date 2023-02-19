@@ -10,7 +10,6 @@ class AbstractBaseView:
 	Contains methods which must be overloaded by its children
 	"""
 	def __init__(self, controller, **atr):
-		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
 		# Constant values:
 		self.controller = controller # References parent controller
 		self.atr_dict = atr # Contains all attributes
