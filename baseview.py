@@ -1,7 +1,6 @@
 import curses
 import math
-import logging
-from utils import parse_json, log
+from utils import log
 
 
 class AbstractBaseView:

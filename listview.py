@@ -1,6 +1,4 @@
 import curses
-import math
-import logging
 from utils import log
 from baseview import AbstractBaseView
 
