@@ -84,8 +84,8 @@ class AbstractBaseView:
 			self.topy = 0
 			self.boty = 0 + self.height - 1
 		if valign == 'bottom':
-			self.topy = curses.LINES - 1
-			self.boty = curses.LINES - self.height
+			self.topy = curses.LINES - self.height
+			self.boty = curses.LINES - 1
 
 	@log
 	def _calculate_window_halign(self):
