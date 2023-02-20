@@ -32,6 +32,7 @@ class Controller:
 	def create_view(self, view_name, view_atr, ViewClass):
 		"""Takes a string name, a dictionary of attributes, and a Class reference to instantiate the view as."""
 		view = ViewClass(self, **view_atr)
+		self.map_colors(view)
 		self.views_dict.update({view_name : view})
 
 	@log
@@ -44,22 +45,27 @@ class Controller:
 		return self.views(view_name)
 
 	@log
-	def map_colors(self):
+	def get_color(self, color_name):
+		return self.colors.get(color_name)
+
+	@log
+	def map_colors(self, view):
 		"""
 		Links colors to color pair integers
 		NEED TO ADD DEFAULTS FOR TEXT_COLOR AND BACKGROUND_COLOR SHOULD THEY NOT BE PROVIDED IN THE JSON FILE
 		"""
-		for view in self.views_dict: # Loop through self.views_dict
-			for atr in view.atr_dict: # Loop through the attributes of each view
-				if "color" in atr: # Any attribute containing "color" in the key will be checked here
-					color_value = view.atr(atr) # Get color list/string from view.atr
-					# Length of colors + 1 always equals the next curses color pair to initialize
-					pair_num = len(self.colors) + 1 
-					if isinstance(color_value, list): # If list -> Assign [0] as fore and [1] as back
-						colors = [self.CURSES_COLOR_MAP.get(color) for color in color_value]
-						view.color_pair_map.update({atr:pair_num}) # Each view is aware of it's own curses color mappings
-						curses.init_pair(pair_num, *colors)
-					elif isinstance(color_value, str): # If string -> Assign string as fore and back as view.DEFAULT_BACK
-						color = self.CURSES_COLOR_MAP.get(color_value)
-						view.color_pair_map.update({atr:pair_num})
-						curses.init_pair(pair_num, color, view.DEFAULT_BACK)
+		for atr in view.atr_dict: # Loop through the attributes of each view
+			pair_num = len(self.colors) + 1 
+			if "color" in atr: # Any attribute containing "color" in the key will be checked here
+				color_value = view.atr(atr) # Get color list/string from view.atr
+				# Length of colors + 1 always equals the next curses color pair to initialize
+				if isinstance(color_value, list): # If list -> Assign [0] as fore and [1] as back
+					colors = [self.CURSES_COLOR_MAP.get(color) for color in color_value]
+					self.colors.update({atr : pair_num})
+					curses.init_pair(pair_num, *colors)
+				elif isinstance(color_value, str): # If string -> Assign string as fore and back as view.DEFAULT_BACK
+					color = self.CURSES_COLOR_MAP.get(color_value)
+					self.colors.update({atr : pair_num})
+					curses.init_pair(pair_num, color, self.DEFAULT_BACK)
+		if self.colors.get("text_color") is None: # Default if there are no colors passed
+			self.colors.update({"text_color" : len(self.colors) + 1})

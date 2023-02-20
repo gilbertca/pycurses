@@ -18,18 +18,22 @@ class ListView(AbstractBaseView):
 	@log
 	def draw_window(self):
 		"""Render background, draw text, and then refresh screen."""
-		self.screen.bkgd(".", curses.color_pair(0))
+		self.screen.bkgd(".", curses.color_pair(self.controller.colors.get("background_color")))
 		vpadding,hpadding = self._get_padding()
 		lines_written = 0
 		for item in self.iterable:
-			self.screen.addstr(lines_written+vpadding,hpadding,f"{item}:{self.atr(item)}\n")	
+			color = curses.color_pair(self.determine_color(item))
+			self.screen.addstr(lines_written+vpadding,hpadding,f"{item}:{self.atr(item)}\n", color)
 			lines_written += 1
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
-	def determine_color(self, string):
+	def determine_color(self, item):
 		"""
 		Method to run checks on 'string' to return a color
 		THIS CURRENT CODE IS TEMPORARY
 		"""
-		pass
+		if "c" in item:
+			return self.controller.get_color("important_color")
+		else:
+			return self.controller.get_color("text_color")
