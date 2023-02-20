@@ -22,8 +22,8 @@ class Controller:
 			'white' : curses.COLOR_WHITE,
 		}
 		self.BACKGROUND_FILL = atr.get('background_fill') if atr.get('background_fill') is not None else ' '
-		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_BLACK
-		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_WHITE
+		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_WHITE
+		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_BLACK
 		self.colors = {}
 		self.views_dict = {}
 		self.views = self.views_dict.get
@@ -67,5 +67,6 @@ class Controller:
 					color = self.CURSES_COLOR_MAP.get(color_value)
 					self.colors.update({atr : pair_num})
 					curses.init_pair(pair_num, color, self.DEFAULT_BACK)
+		# This line may need to be removed? Not sure if this functionality is intended
 		if self.colors.get("text_color") is None: # Default if there are no colors passed
-			self.colors.update({"text_color" : len(self.colors) + 1})
+			self.colors.update({"text_color" : 0}) # 0 is curses default for W/B
