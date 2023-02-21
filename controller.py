@@ -24,6 +24,14 @@ class Controller:
 		self.BACKGROUND_FILL = atr.get('background_fill') if atr.get('background_fill') is not None else ' '
 		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_WHITE
 		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_BLACK
+		"""
+			self.colors should look like this:
+			self.colors = {
+				view : {
+					"*_color" : pair_num,
+				},
+			}
+		"""
 		self.colors = {}
 		self.views_dict = {}
 		self.views = self.views_dict.get
@@ -45,8 +53,8 @@ class Controller:
 		return self.views(view_name)
 
 	@log
-	def get_color(self, color_name):
-		return self.colors.get(color_name)
+	def get_color(self, view, color_name):
+		return self.colors.get(view).get(color_name)
 
 	@log
 	def map_colors(self, view):
@@ -54,18 +62,19 @@ class Controller:
 		Links colors to color pair integers
 		NEED TO ADD DEFAULTS FOR TEXT_COLOR AND BACKGROUND_COLOR SHOULD THEY NOT BE PROVIDED IN THE JSON FILE
 		"""
+		self.colors.update({view : {}})
 		for atr in view.atr_dict: # Loop through the attributes of each view
-			pair_num = len(self.colors) + 1 
+			pair_num = len(self.colors.get(view)) + 1 
 			if "color" in atr: # Any attribute containing "color" in the key will be checked here
 				color_value = view.atr(atr) # Get color list/string from view.atr
 				# Length of colors + 1 always equals the next curses color pair to initialize
 				if isinstance(color_value, list): # If list -> Assign [0] as fore and [1] as back
 					colors = [self.CURSES_COLOR_MAP.get(color) for color in color_value]
-					self.colors.update({atr : pair_num})
+					self.colors.get(view).update({atr : pair_num})
 					curses.init_pair(pair_num, *colors)
 				elif isinstance(color_value, str): # If string -> Assign string as fore and back as view.DEFAULT_BACK
 					color = self.CURSES_COLOR_MAP.get(color_value)
-					self.colors.update({atr : pair_num})
+					self.colors.get(view).update({atr : pair_num})
 					curses.init_pair(pair_num, color, self.DEFAULT_BACK)
 		# This line may need to be removed? Not sure if this functionality is intended
 		if self.colors.get("text_color") is None: # Default if there are no colors passed

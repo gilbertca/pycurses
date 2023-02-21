@@ -16,7 +16,7 @@ class ListView(AbstractBaseView):
 	@log
 	def draw_window(self):
 		"""Render background, draw text, and then refresh screen."""
-		self.screen.bkgd(".", curses.color_pair(self.controller.colors.get("background_color")))
+		self.screen.bkgd(".", curses.color_pair(self.controller.colors.get(self).get("background_color")))
 		vpadding,hpadding = self._get_padding()
 		lines_written = 0
 		for item in self.iterable:
@@ -32,6 +32,6 @@ class ListView(AbstractBaseView):
 		THIS CURRENT CODE IS TEMPORARY
 		"""
 		if "c" in item:
-			return self.controller.get_color("important_color")
+			return self.controller.get_color(self, "important_color")
 		else:
-			return self.controller.get_color("text_color")
+			return self.controller.get_color(self, "text_color")
