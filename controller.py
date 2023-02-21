@@ -40,8 +40,8 @@ class Controller:
 	def create_view(self, view_name, view_atr, ViewClass):
 		"""Takes a string name, a dictionary of attributes, and a Class reference to instantiate the view as."""
 		view = ViewClass(self, **view_atr)
-		self.map_colors(view)
 		self.views_dict.update({view_name : view})
+		self.map_colors(view)
 
 	@log
 	def draw_view(self, view_name):
@@ -64,8 +64,8 @@ class Controller:
 		"""
 		self.colors.update({view : {}})
 		for atr in view.atr_dict: # Loop through the attributes of each view
-			pair_num = len(self.colors.get(view)) + 1 
 			if "color" in atr: # Any attribute containing "color" in the key will be checked here
+				pair_num = self._next_color_pair()
 				color_value = view.atr(atr) # Get color list/string from view.atr
 				# Length of colors + 1 always equals the next curses color pair to initialize
 				if isinstance(color_value, list): # If list -> Assign [0] as fore and [1] as back
@@ -77,5 +77,17 @@ class Controller:
 					self.colors.get(view).update({atr : pair_num})
 					curses.init_pair(pair_num, color, self.DEFAULT_BACK)
 		# This line may need to be removed? Not sure if this functionality is intended
-		if self.colors.get("text_color") is None: # Default if there are no colors passed
-			self.colors.update({"text_color" : 0}) # 0 is curses default for W/B
+		if self.colors.get(view).get("text_color") is None: # Default if there are no colors passed
+			self.colors.get(view).update({"text_color" : 0}) # 0 is curses default for W/B
+
+	@log
+	def _next_color_pair(self):
+		"""
+		Returns an integer corresponding to the free integer for curses color pairs
+		"""
+		count = 0
+		for view_name in self.views_dict:
+			view = self.views(view_name)
+			color_dict = self.colors.get(view)
+			count += len(color_dict)
+		return count + 1
