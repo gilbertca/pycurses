@@ -1,9 +1,0 @@
-{
-	"hpercent" : 50,
-	"height" : 1,
-	"valign" : "center",
-	"halign" : "right",
-	"text_color" : ["black","white"],
-	"background_color" : ["white","cyan"],
-	"important_color" : ["blue","white"]
-}
