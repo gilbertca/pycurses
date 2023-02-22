@@ -10,14 +10,18 @@ def main(stdscr):
 	A method for testing the view
 	"""
 	# Required:
-	controller = Controller()
+	controller = Controller(stdscr)
 	# Arbitrary data:
 	view_name = "listview"
+	view_name2 = "listview2"
 	view_atr = parse_json(JSON_FILE1)
+	view_atr2 = parse_json(JSON_FILE2)
 	# To draw views:
 	# TODO: Condense these 2 calls into 1 shortcut call
 	controller.create_view(view_name, view_atr, ListView)
+	controller.create_view(view_name2, view_atr2, ListView)
 	controller.draw_view("listview")
+	controller.draw_view("listview2")
 	# This line is to pause before ending. From here,
 	#	control should be handed off and allow interactibility
 	controller.get_view("listview").screen.getch()

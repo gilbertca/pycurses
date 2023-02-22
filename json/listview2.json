@@ -4,5 +4,6 @@
 	"valign" : "top",
 	"halign" : "right",
 	"text_color" : ["black","white"],
-	"background_color" : ["cyan","cyan"]
+	"background_color" : ["white","cyan"],
+	"important_color" : ["blue","white"]
 }

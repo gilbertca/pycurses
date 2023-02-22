@@ -9,8 +9,9 @@ class Controller:
 	Controller needs to map colors in order to keep track of arbitrary number of color pairs.
 	Controller needs to call draw methods for view objects
 	"""
-	def __init__(self, views_dict=None, **atr):
+	def __init__(self, stdscr, views_dict=None, **atr):
 		logging.basicConfig(filename='pycurses.log', filemode='w', level=logging.DEBUG)
+		self.stdscr = stdscr
 		self.CURSES_COLOR_MAP = {
 			'black' : curses.COLOR_BLACK,
 			'red' : curses.COLOR_RED,
