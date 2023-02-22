@@ -16,7 +16,7 @@ class ListView(AbstractBaseView):
 	@log
 	def draw_window(self):
 		"""Render background, draw text, and then refresh screen."""
-		self.screen.bkgd(".", curses.color_pair(self.controller.colors.get(self).get("background_color")))
+		self.draw_background()
 		vpadding,hpadding = self._get_padding()
 		lines_written = 0
 		for item in self.iterable:
@@ -24,6 +24,18 @@ class ListView(AbstractBaseView):
 			self.screen.addstr(lines_written+vpadding,hpadding,f"{item}:{self.atr(item)}\n", color)
 			lines_written += 1
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
+
+	@log
+	def draw_background(self):
+		"""
+		Does the absurd calls required to draw the background.
+		"""
+		background_attributes  = (
+			self.BACKGROUND_FILL, # Get the 'fill' character
+			# This next call returns the background color... unfortunately.
+			curses.color_pair(self.controller.colors.get(self).get("background_color"))
+		)
+		self.screen.bkgd(*background_attributes)
 
 	@log
 	def determine_color(self, item):

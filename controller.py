@@ -22,7 +22,6 @@ class Controller:
 			'cyan' : curses.COLOR_CYAN,
 			'white' : curses.COLOR_WHITE,
 		}
-		self.BACKGROUND_FILL = atr.get('background_fill') if atr.get('background_fill') is not None else ' '
 		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_WHITE
 		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_BLACK
 		"""
