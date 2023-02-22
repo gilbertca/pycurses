@@ -1,7 +1,7 @@
 {
-	"width" : 20,
-	"height" : 10,
-	"valign" : "top",
+	"hpercent" : 50,
+	"height" : 1,
+	"valign" : "center",
 	"halign" : "right",
 	"text_color" : ["black","white"],
 	"background_color" : ["white","cyan"],
