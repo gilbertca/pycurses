@@ -24,7 +24,9 @@ def main(stdscr):
 	controller.draw_view("listview2")
 	# This line is to pause before ending. From here,
 	#	control should be handed off and allow interactibility
-	controller.get_view("listview").screen.getch()
+	key_pressed = controller.get_view("listview").screen.getch()
+	if key_pressed == ord("x"):
+		curses.napms(1000)
 	# Returning *anything* ends a curses session.
 	return 0
 
