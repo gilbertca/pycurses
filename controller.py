@@ -79,6 +79,8 @@ class Controller:
 		# This line may need to be removed? Not sure if this functionality is intended
 		if self.colors.get(view).get("text_color") is None: # Default if there are no colors passed
 			self.colors.get(view).update({"text_color" : 0}) # 0 is curses default for W/B
+		if self.colors.get(view).get("background_color") is None:
+			self.colors.get(view).update({"background_color" : 0}) # 0 is curses default for W/B
 
 	@log
 	def _next_color_pair(self):
