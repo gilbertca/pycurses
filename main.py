@@ -28,6 +28,8 @@ def main(stdscr):
 	if key_pressed == ord("x"):
 		curses.napms(1000)
 	# Returning *anything* ends a curses session.
+	#	Perhaps this should be return Controller.run()
+	#	or something along those lines.
 	return 0
 
 if __name__ == "__main__":

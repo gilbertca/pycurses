@@ -37,6 +37,15 @@ class Controller:
 		self.views = self.views_dict.get
 
 	@log
+	def begin(self):
+	"""
+	Primary loop of any *pycurses program.
+	Running this function passes control to the Controller,
+		and key presses' functions are View specific.
+	"""
+	pass
+
+	@log
 	def create_view(self, view_name, view_atr, ViewClass):
 		"""Takes a string name, a dictionary of attributes, and a Class reference to instantiate the view as."""
 		view = ViewClass(self, **view_atr)
