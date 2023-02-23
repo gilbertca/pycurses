@@ -87,6 +87,7 @@ class Controller:
 		"""
 		count = 0
 		for view_name in self.views_dict:
+			# These three lines could be one, but are three for simplicity's sake.
 			view = self.views(view_name)
 			color_dict = self.colors.get(view)
 			count += len(color_dict)

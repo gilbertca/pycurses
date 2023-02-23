@@ -43,7 +43,4 @@ class ListView(AbstractBaseView):
 		Method to run checks on 'string' to return a color
 		THIS CURRENT CODE IS TEMPORARY
 		"""
-		if "c" in item:
-			return self.controller.get_color(self, "important_color")
-		else:
-			return self.controller.get_color(self, "text_color")
+		return self.controller.get_color(self, "text_color")
