@@ -38,58 +38,58 @@ class Controller:
 
 	@log
 	def begin(self):
-	"""
-	Primary loop of any *pycurses program.
-	Running this function passes control to the Controller,
-		and key presses' functions are View specific.
-	Will draw every view in it's own views_dict, and return 0
-		upon program completion.
-	"""
-	last_drawn_view_name = ""
-	for view_name in self.views_dict:
-		self.draw_view(view_name)
-		# TODO: DETERMINE WHICH WINDOW IS 'FIRST'
-		# 	This is a primitive way of choosing the last drawn windows
-		#	as the 'first window to be drawn.
-		last_drawn_view_name = view_name
-	# Control begin:
-	"""
-	Idea: interact function
-		#Controller runs own interact() method, ex:
-		response = self.interact(view_name)
-		#The controller's interact() will call the View's interact:
-		Controller:
-		def interact(self, view_name, ...):
-			return self.views(view_name).interact()
+		"""
+		Primary loop of any *pycurses program.
+		Running this function passes control to the Controller,
+			and key presses' functions are View specific.
+		Will draw every view in it's own views_dict, and return 0
+			upon program completion.
+		"""
+		last_drawn_view_name = ""
+		for view_name in self.views_dict:
+			self.draw_view(view_name)
+			# TODO: DETERMINE WHICH WINDOW IS 'FIRST'
+			# 	This is a primitive way of choosing the last drawn windows
+			#	as the 'first window to be drawn.
+			last_drawn_view_name = view_name
+		# Control begin:
+		"""
+		Idea: interact function
+			#Controller runs own interact() method, ex:
+			response = self.interact(view_name)
+			#The controller's interact() will call the View's interact:
+			Controller:
+			def interact(self, view_name, ...):
+				return self.views(view_name).interact()
 
-		#Then the View instance can handle the interact call:
-		*View:
-		def interact(self, ...)
-			key_press = self.screen.getch()
-			if key_press in self.SPECIAL_KEYS:
-				self.do_special_thing()
-			elif key_press in self.EXIT_KEYS:
-				return self.get_exit_code(key_press)
-		def get_exit_code(self, key_press):
-			return THIS_VALUE_GOES_TO_CONTROLLER
-		
-		#Then this value tells the controller what to do next:
-		#To exit, switch focus, or some other control function:
-		Controller:
-		def begin(self):
-			...
-			while True:
-				response = self.interact(view_name)
-				# This ends the program:
-				if response == 0:
-					return 0
-				# This would switch the controller's focus:
-				elif response in self.SWITCH_FOCUS_KEYS:
-					view_name = next_view_name = self.WINDOW_CONTROL(response)
-				elif response in self.OTHER_FUNCTION_KEYS:
-					self.do_function()
-	"""
-	self.interact(last_drawn_view_name)
+			#Then the View instance can handle the interact call:
+			*View:
+			def interact(self, ...)
+				key_press = self.screen.getch()
+				if key_press in self.SPECIAL_KEYS:
+					self.do_special_thing()
+				elif key_press in self.EXIT_KEYS:
+					return self.get_exit_code(key_press)
+			def get_exit_code(self, key_press):
+				return THIS_VALUE_GOES_TO_CONTROLLER
+			
+			#Then this value tells the controller what to do next:
+			#To exit, switch focus, or some other control function:
+			Controller:
+			def begin(self):
+				...
+				while True:
+					response = self.interact(view_name)
+					# This ends the program:
+					if response == 0:
+						return 0
+					# This would switch the controller's focus:
+					elif response in self.SWITCH_FOCUS_KEYS:
+						view_name = next_view_name = self.WINDOW_CONTROL(response)
+					elif response in self.OTHER_FUNCTION_KEYS:
+						self.do_function()
+		"""
+		#self.interact(last_drawn_view_name)
 
 	@log
 	def create_view(self, view_name, view_atr, ViewClass):
