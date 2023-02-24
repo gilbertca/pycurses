@@ -22,6 +22,9 @@ class Controller:
 			'cyan' : curses.COLOR_CYAN,
 			'white' : curses.COLOR_WHITE,
 		}
+		self.FUNCTIONS = {
+			
+		}
 		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_WHITE
 		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_BLACK
 		"""
@@ -89,7 +92,19 @@ class Controller:
 					elif response in self.OTHER_FUNCTION_KEYS:
 						self.do_function()
 		"""
-		#self.interact(last_drawn_view_name)
+		return self.interact(last_drawn_view_name)
+
+	@log
+	def interact(self, view_name):
+		"""
+		Calls the selected view's interact function, and responds to the return code
+		"""
+		while True:
+			response = self.views(view_name).interact()
+			if response == 0: # If keypress is for program exit:
+				return 0 # Terminate curses windows
+			else: # Should only be triggered if the view does not have a function for that key.
+				self.FUNCTIONS(response)() # TODO: test effects of calling NoneType
 
 	@log
 	def create_view(self, view_name, view_atr, ViewClass):

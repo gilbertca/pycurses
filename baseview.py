@@ -39,6 +39,16 @@ class AbstractBaseView:
 		raise Exception(f"This method must be overloaded by it's child.")
 
 	@log
+	def interact(self):
+		"""
+		This method is called by it's Controller's interact() method.
+		Returning 0 will exit the program,
+		Returning a Controller CODE will cause the controller to perform an action,
+		Otherwise, this function will handle any actions to be performed.
+		"""
+		pass
+
+	@log
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
 		# Height calculations:
