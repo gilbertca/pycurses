@@ -48,7 +48,12 @@ class AbstractBaseView:
 		Returning a Controller CODE will cause the controller to perform an action,
 		Otherwise, this function will handle any actions to be performed.
 		"""
-		pass
+		key_press = self.screen.getch()
+		function = self.function(key_press)
+		if function is None:
+			return key_press
+		else:
+			function()
 
 	@log
 	def _calculate_size(self):
