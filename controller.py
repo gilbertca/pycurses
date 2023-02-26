@@ -22,20 +22,10 @@ class Controller:
 			'cyan' : curses.COLOR_CYAN,
 			'white' : curses.COLOR_WHITE,
 		}
-		self.FUNCTIONS_DICT = {
-			
-		}
+		self.FUNCTIONS_DICT = {}
 		self.function = self.FUNCTIONS_DICT.get
 		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_WHITE
 		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_BLACK
-		"""
-			self.colors should look like this:
-			self.colors = {
-				view : {
-					"*_color" : pair_num,
-				},
-			}
-		"""
 		self.colors = {}
 		self.views_dict = {}
 		self.views = self.views_dict.get

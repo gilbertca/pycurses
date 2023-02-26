@@ -14,6 +14,8 @@ class AbstractBaseView:
 		self.atr_dict = atr # Contains all attributes
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
 		self.iterable = [n for n in self.atr_dict]
+		self.FUNCTIONS_DICT = {}
+		self.function = self.FUNCTIONS_DICT.get
 		self.BACKGROUND_FILL = self.atr('background_fill') if atr.get('background_fill') is not None else ' '
 
 	@log
