@@ -22,10 +22,10 @@ class Controller:
 			'cyan' : curses.COLOR_CYAN,
 			'white' : curses.COLOR_WHITE,
 		}
-		self.FUNCTION_DICT = {
+		self.FUNCTIONS_DICT = {
 			
 		}
-		self.functions = self.FUNCTION_DICT.get
+		self.function = self.FUNCTIONS_DICT.get
 		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_WHITE
 		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_BLACK
 		"""
@@ -56,7 +56,6 @@ class Controller:
 			# 	This is a primitive way of choosing the last drawn windows
 			#	as the 'first window to be drawn.
 			last_drawn_view_name = view_name
-		# Control begin:
 		return self.interact(last_drawn_view_name)
 
 	@log
@@ -69,7 +68,9 @@ class Controller:
 			if response == 0: # If keypress is for program exit:
 				return 0 # Terminate curses windows
 			else: # Should only be triggered if the view does not have a function for that key.
-				func = self.functions(response)
+				function = self.function(response)
+				if function is not None:
+					function()
 
 	@log
 	def create_view(self, view_name, view_atr, ViewClass):
