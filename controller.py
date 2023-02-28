@@ -23,12 +23,15 @@ class Controller:
 			'white' : curses.COLOR_WHITE,
 		}
 		self.FUNCTIONS_DICT = {
-			ord('x') : 0,
+			'x' : 0,
+			'\t' : self.switch_focus,
 		}
-		self.function = self.FUNCTIONS_DICT.get
+		self.function = lambda key_integer : self.FUNCTIONS_DICT.get(chr(key_integer))
+		self.current_view_index = 0
+		self.current_view_name = "" # The name the controller runs interact() on
 		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_WHITE
 		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_BLACK
-		self.colors = {}
+		self.colors = {} # A dictionary containing nested dict objects assigning colors.
 		self.views_dict = {}
 		self.views = self.views_dict.get
 
@@ -41,31 +44,51 @@ class Controller:
 		Will draw every view in it's own views_dict, and return 0
 			upon program completion.
 		"""
-		last_drawn_view_name = ""
+		# Sets focus to the 'first'
+		first_view_name = list(self.views_dict)[self.current_view_index]
 		for view_name in self.views_dict:
 			self.draw_view(view_name)
-			# TODO: DETERMINE WHICH WINDOW IS 'FIRST'
-			# 	This is a primitive way of choosing the last drawn windows
-			#	as the 'first window to be drawn.
-			last_drawn_view_name = view_name
-		return self.interact(last_drawn_view_name)
+		return self.interact(first_view_name)
 
 	@log
 	def interact(self, view_name):
 		"""
-		Calls the selected view's interact function, and responds to the return code
+		Calls the selected view's interact function, and responds to the return code.
 		"""
+		self.current_view_name = view_name
 		while True:
-			response = self.views(view_name).interact()
-			function = self.function(response)
+			response = self.views(self.current_view_name).interact()
+			# Conditional required for 'non-responsive' view functions.
+			if response is not None:
+				function = self.function(response)
+			# Conditional to exit program:
 			if function == 0:
 				return 0
+			# Conditional if keypress results in a function:
 			elif function is not None:
 				function()
 
 	@log
+	def focus(self):
+		"""
+		Puts a view into focus.
+		"""
+		self.current_view_index += 1
+		self.current_view_name  = list(self.views_dict)[current_view_index]
+
+	@log
+	def switch_focus(self):
+		"""
+		Swaps the 'active' window, allowing keypresses for that window only.
+		"""
+		pass
+
+	@log
 	def create_view(self, view_name, view_atr, ViewClass):
-		"""Takes a string name, a dictionary of attributes, and a Class reference to instantiate the view as."""
+		"""
+		Takes a string name, a dictionary of attributes, 
+			and a Class reference to initialize the view as.
+		"""
 		view = ViewClass(self, **view_atr)
 		self.views_dict.update({view_name : view})
 		self.map_colors(view)
