@@ -14,7 +14,9 @@ class AbstractBaseView:
 		self.atr_dict = atr # Contains all attributes
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
 		self.iterable = [n for n in self.atr_dict]
-		self.FUNCTIONS_DICT = {}
+		self.FUNCTIONS_DICT = {
+			ord('w') : self.write_character,
+		}
 		self.function = self.FUNCTIONS_DICT.get
 		self.BACKGROUND_FILL = self.atr('background_fill') if atr.get('background_fill') is not None else ' '
 
@@ -43,17 +45,24 @@ class AbstractBaseView:
 	@log
 	def interact(self):
 		"""
-		This method is called by it's Controller's interact() method.
-		Returning 0 will exit the program,
-		Returning a Controller CODE will cause the controller to perform an action,
-		Otherwise, this function will handle any actions to be performed.
+		Method which will check for internal functions first,
+			and return the key_press if no function is found.
+		Maybe the ability to pass commands to multiple views
+			at a time, or allow controller access to these keys?
 		"""
 		key_press = self.screen.getch()
 		function = self.function(key_press)
-		if function is None:
+		if function is None: # If no function found, return keypress:
 			return key_press
-		else:
+		else: # Otherwise there is a function, and it should be run:
 			function()
+
+	@log
+	def write_character(self):
+		self.screen.addstr("Writing Mode: ")
+		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
+		self.screen.addstr(chr(self.screen.getch()))
+		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
 	def _calculate_size(self):

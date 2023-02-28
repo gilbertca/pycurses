@@ -57,8 +57,7 @@ class Controller:
 		"""
 		while True:
 			response = self.views(view_name).interact()
-			if response is not None:
-				function = self.function(response)
+			function = self.function(response)
 			if function == 0:
 				return 0
 			elif function is not None:
