@@ -73,8 +73,7 @@ class Controller:
 		"""
 		Puts a view into focus.
 		"""
-		self.current_view_index += 1
-		self.current_view_name  = list(self.views_dict)[current_view_index]
+		pass
 
 	@log
 	def switch_focus(self):
