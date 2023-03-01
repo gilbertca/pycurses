@@ -27,6 +27,7 @@ class Controller:
 			'\t' : self.next_view,
 		}
 		self.function = lambda key_integer : self.FUNCTIONS_DICT.get(chr(key_integer))
+		self.current_view_index = 0
 		self.current_view_name = "" # The name the controller runs interact() on
 		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_WHITE
 		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_BLACK
@@ -44,10 +45,10 @@ class Controller:
 			upon program completion.
 		"""
 		# Sets focus to the 'first'
-		first_view_name = list(self.views_dict)[0]
+		first_view_name = list(self.views_dict)[self.current_view_index]
 		for view_name in self.views_dict:
 			self.draw_view(view_name)
-		self.focus(view_name)
+		self.set_focus(view_name)
 		return self.interact(first_view_name)
 
 	@log
@@ -69,7 +70,7 @@ class Controller:
 				function()
 
 	@log
-	def focus(self, view_name):
+	def set_focus(self, view_name):
 		"""
 		Sets self.current_view_name to the passed view name.
 		"""
@@ -80,7 +81,14 @@ class Controller:
 		"""
 		Runs self.focus on the next view in the list.
 		"""
-		pass
+		if self.current_view_index == len(self.views_dict) - 1:
+			self.current_view_index = 0
+		else:
+			self.current_view_index += 1
+		# Get the next view name:
+		next_view_name = list(self.views_dict)[self.current_view_index]
+		# Set focus to the next view:
+		self.set_focus(next_view_name)
 
 	@log
 	def create_view(self, view_name, view_atr, ViewClass):
