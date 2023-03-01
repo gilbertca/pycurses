@@ -24,10 +24,9 @@ class Controller:
 		}
 		self.FUNCTIONS_DICT = {
 			'x' : 0,
-			'\t' : self.switch_focus,
+			'\t' : self.next_view,
 		}
 		self.function = lambda key_integer : self.FUNCTIONS_DICT.get(chr(key_integer))
-		self.current_view_index = 0
 		self.current_view_name = "" # The name the controller runs interact() on
 		self.DEFAULT_TEXT = atr.get('default_text') if atr.get('default_text') is not None else curses.COLOR_WHITE
 		self.DEFAULT_BACK = atr.get('default_back') if atr.get('default_back') is not None else curses.COLOR_BLACK
@@ -45,9 +44,10 @@ class Controller:
 			upon program completion.
 		"""
 		# Sets focus to the 'first'
-		first_view_name = list(self.views_dict)[self.current_view_index]
+		first_view_name = list(self.views_dict)[0]
 		for view_name in self.views_dict:
 			self.draw_view(view_name)
+		self.focus(view_name)
 		return self.interact(first_view_name)
 
 	@log
@@ -55,8 +55,8 @@ class Controller:
 		"""
 		Calls the selected view's interact function, and responds to the return code.
 		"""
-		self.current_view_name = view_name
 		while True:
+			function = None # Required for references to function
 			response = self.views(self.current_view_name).interact()
 			# Conditional required for 'non-responsive' view functions.
 			if response is not None:
@@ -69,16 +69,16 @@ class Controller:
 				function()
 
 	@log
-	def focus(self):
+	def focus(self, view_name):
 		"""
-		Puts a view into focus.
+		Sets self.current_view_name to the passed view name.
 		"""
-		pass
+		self.current_view_name = view_name
 
 	@log
-	def switch_focus(self):
+	def next_view(self):
 		"""
-		Swaps the 'active' window, allowing keypresses for that window only.
+		Runs self.focus on the next view in the list.
 		"""
 		pass
 
