@@ -21,6 +21,10 @@ class AbstractBaseView:
 		self.BACKGROUND_FILL = self.atr('background_fill') if atr.get('background_fill') is not None else ' '
 
 	@log
+	def add_string(self, string, *args, **kwargs):
+		self.screen.addstr(string, *args, **kwargs)
+
+	@log
 	def create_window(self):
 		"""Creates a pad or window object based on given parameters"""
 		self._calculate_size()
@@ -29,14 +33,14 @@ class AbstractBaseView:
 		self.screen = curses.newpad(self.height, self.width)
 	
 	@log
-	def draw_window(self):
+	def determine_color(self, string):
 		"""
 		To be overloaded by child.
 		"""
 		raise Exception(f"This method must be overloaded by it's child.")
 
 	@log
-	def determine_color(self, string):
+	def draw_window(self):
 		"""
 		To be overloaded by child.
 		"""
@@ -56,6 +60,10 @@ class AbstractBaseView:
 			return key_press
 		else: # Otherwise there is a function, and it should be run:
 			function()
+
+	@log
+	def refresh_screen(self):
+		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
 	def write_character(self):
