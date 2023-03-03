@@ -13,6 +13,11 @@ class ListView(AbstractBaseView):
 	# More to be added as more requirements are needed
 	# Also need to be able to generate arbitrary color mappings
 	# Need to define/declare variables regarding color pairs
+	def __init__(self, controller, **atr):
+		super().__init__(controller, **atr)
+		self.FUNCTIONS_DICT.update({
+			ord('w') : self.write_character,
+		})
 	@log
 	def draw_window(self):
 		"""Render background, draw text, and then refresh screen."""
