@@ -26,6 +26,13 @@ class ListView(AbstractBaseView):
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
+	def write_character(self):
+		self.screen.addstr("Writing Mode: ")
+		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
+		self.screen.addstr(chr(self.screen.getch()))
+		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
+
+	@log
 	def determine_color(self, item):
 		"""
 		Method to run checks on 'string' to return a color

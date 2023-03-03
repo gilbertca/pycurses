@@ -78,13 +78,6 @@ class AbstractBaseView:
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
-	def write_character(self):
-		self.screen.addstr("Writing Mode: ")
-		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
-		self.screen.addstr(chr(self.screen.getch()))
-		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
-
-	@log
 	def _calculate_size(self):
 		"""Method run by create_window to calculate height and width"""
 		# Height calculations:
