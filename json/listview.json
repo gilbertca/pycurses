@@ -1,0 +1,9 @@
+{
+	"text_color":["blue","red"],
+	"background_color":["white","black"],
+	"vpercent":80,
+	"valign""center",
+	"hpercent":40,
+	"halign":"right",
+	"background_fill":"."
+}

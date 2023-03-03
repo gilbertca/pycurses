@@ -1,0 +1,9 @@
+{
+	"text_color":["cyan","black"],
+	"background_color":["white","black"],
+	"vpercent":80,
+	"valign":"center",
+	"hpercent":60,
+	"halign":"left",
+	"background_fill":"|"
+}
