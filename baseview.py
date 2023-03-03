@@ -40,6 +40,18 @@ class AbstractBaseView:
 		raise Exception(f"This method must be overloaded by it's child.")
 
 	@log
+	def draw_background(self):
+		"""
+		Does the absurd calls required to draw the background.
+		"""
+		background_attributes  = (
+			self.BACKGROUND_FILL, # Get the 'fill' character
+			# This next call returns the background color... unfortunately.
+			curses.color_pair(self.controller.colors.get(self).get("background_color"))
+		)
+		self.screen.bkgd(*background_attributes)
+
+	@log
 	def draw_window(self):
 		"""
 		To be overloaded by child.

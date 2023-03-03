@@ -26,18 +26,6 @@ class ListView(AbstractBaseView):
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
-	def draw_background(self):
-		"""
-		Does the absurd calls required to draw the background.
-		"""
-		background_attributes  = (
-			self.BACKGROUND_FILL, # Get the 'fill' character
-			# This next call returns the background color... unfortunately.
-			curses.color_pair(self.controller.colors.get(self).get("background_color"))
-		)
-		self.screen.bkgd(*background_attributes)
-
-	@log
 	def determine_color(self, item):
 		"""
 		Method to run checks on 'string' to return a color
