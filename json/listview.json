@@ -1,5 +1,5 @@
 {
-	"text_color":["blue","red"],
+	"text_color":["white","blue"],
 	"background_color":["white","black"],
 	"vpercent":80,
 	"valign":"center",

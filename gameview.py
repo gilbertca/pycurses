@@ -30,3 +30,5 @@ class InventoryView(ListView):
 	}
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+		# This terrible line creates a nice string from inventory:
+		self.iterable = [f"{item.capitalize()} {InventoryView.starting_inventory.get(item)}" for item in InventoryView.starting_inventory]
