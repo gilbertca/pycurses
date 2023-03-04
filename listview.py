@@ -17,7 +17,6 @@ class ListView(AbstractBaseView):
 		super().__init__(controller, **atr)
 		self.iterable = []
 		self.FUNCTIONS_DICT.update({
-			ord('w') : self.write_character,
 		})
 	@log
 	def draw_window(self):
