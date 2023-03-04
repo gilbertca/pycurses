@@ -1,6 +1,6 @@
 import curses
 from listview import ListView
-from gameview import GameView
+from gameview import GameView, InventoryView
 from controller import Controller
 from utils import parse_json
 
@@ -19,7 +19,7 @@ def main(stdscr):
 	view_a2 = parse_json(JSON_FILE2)
 	# To draw views:
 	controller.create_view(view_name, view_atr, GameView)
-	controller.create_view(view_n2, view_a2, ListView)
+	controller.create_view(view_n2, view_a2, InventoryView)
 	# Program ends upon returning 0:
 	return controller.begin()
 
