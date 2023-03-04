@@ -15,6 +15,7 @@ class ListView(AbstractBaseView):
 	# Need to define/declare variables regarding color pairs
 	def __init__(self, controller, **atr):
 		super().__init__(controller, **atr)
+		self.iterable = []
 		self.FUNCTIONS_DICT.update({
 			ord('w') : self.write_character,
 		})
@@ -26,21 +27,14 @@ class ListView(AbstractBaseView):
 		lines_written = 0
 		for item in self.iterable:
 			color = curses.color_pair(self.determine_color(item))
-			self.screen.addstr(lines_written+vpadding,hpadding,f"{item}:{self.atr(item)}\n", color)
+			self.screen.addstr(lines_written+vpadding,hpadding,f"{item}\n", color)
 			lines_written += 1
-		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
-
-	@log
-	def write_character(self):
-		self.screen.addstr("Writing Mode: ")
-		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
-		self.screen.addstr(chr(self.screen.getch()))
 		self.screen.refresh(0, 0, self.topy, self.leftx, self.boty, self.rightx)
 
 	@log
 	def determine_color(self, item):
 		"""
-		Method to run checks on 'string' to return a color
-		THIS CURRENT CODE IS TEMPORARY
+		Requires a minimum of one color;
+		This method may be overloaded to provide custom logic for colors.
 		"""
 		return self.controller.get_color(self, "text_color")

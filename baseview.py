@@ -13,7 +13,6 @@ class AbstractBaseView:
 		self.controller = controller # References parent controller
 		self.atr_dict = atr # Contains all attributes
 		self.atr = self.atr_dict.get # use self.atr('key') saving typing .get()
-		self.iterable = [n for n in self.atr_dict]
 		self.FUNCTIONS_DICT = {
 			
 		}
