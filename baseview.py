@@ -20,8 +20,11 @@ class AbstractBaseView:
 		self.BACKGROUND_FILL = self.atr('background_fill') if atr.get('background_fill') is not None else ' '
 
 	@log
-	def add_string(self, string, *args, **kwargs):
-		self.screen.addstr(string, *args, **kwargs)
+	def add_string(self, string, y=None, x=None, *args, **kwargs):
+		if y is None and x is None:
+			self.screen.addstr(string, *args, **kwargs)
+		elif y >= 0 and x >= 0:
+			self.screen.addstr(y, x, string, *args, **kwargs)
 
 	@log
 	def create_window(self):
