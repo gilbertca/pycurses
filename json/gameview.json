@@ -3,6 +3,7 @@
 	"background_color":["white","black"],
 	"vpercent":80,
 	"valign":"center",
+	"padding":6,
 	"hpercent":60,
 	"halign":"left",
 	"background_fill":"|"

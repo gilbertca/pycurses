@@ -2,6 +2,7 @@
 	"text_color":["white","blue"],
 	"background_color":["white","black"],
 	"vpercent":80,
+	"padding":1,
 	"valign":"center",
 	"hpercent":40,
 	"halign":"right",
