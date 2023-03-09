@@ -97,7 +97,7 @@ class Controller:
 		# Remove old focus character:
 		current_view_instance = self.views(self.current_view_name)
 		current_view_instance.screen.addch(0,0,current_view_instance.BACKGROUND_FILL)
-			current_view_instance.refresh_screen()
+		current_view_instance.refresh_screen()
 		# Set focus to the next view:
 		self.set_focus(next_view_name)
 
