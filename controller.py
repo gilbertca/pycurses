@@ -75,6 +75,13 @@ class Controller:
 		Sets self.current_view_name to the passed view name.
 		"""
 		self.current_view_name = view_name
+		view_instance = self.views(self.current_view_name)
+		self._write_focus_character(view_instance)
+
+	@log
+	def _write_focus_character(self, view_instance):
+		view_instance.screen.addch(0,0,'X')
+		view_instance.refresh_screen()
 
 	@log
 	def next_view(self):
@@ -87,6 +94,10 @@ class Controller:
 			self.current_view_index += 1
 		# Get the next view name:
 		next_view_name = list(self.views_dict)[self.current_view_index]
+		# Remove old focus character:
+		current_view_instance = self.views(self.current_view_name)
+		current_view_instance.screen.addch(0,0,current_view_instance.BACKGROUND_FILL)
+			current_view_instance.refresh_screen()
 		# Set focus to the next view:
 		self.set_focus(next_view_name)
 
