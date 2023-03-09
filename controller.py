@@ -48,7 +48,7 @@ class Controller:
 		first_view_name = list(self.views_dict)[self.current_view_index]
 		for view_name in self.views_dict:
 			self.draw_view(view_name)
-		self.set_focus(view_name)
+		self.set_focus(first_view_name)
 		return self.interact(first_view_name)
 
 	@log
