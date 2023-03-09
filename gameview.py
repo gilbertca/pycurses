@@ -11,7 +11,7 @@ class GameView(AbstractBaseView):
 	def draw_window(self):
 		self.draw_background()
 		vpadding,hpadding = self._get_padding()
-		self.screen.addstr("Hello, world.")
+		self.add_string("Hello, world.")
 		self.refresh_screen()
 
 	def determine_color(self, item):
