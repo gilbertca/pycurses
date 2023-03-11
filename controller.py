@@ -25,6 +25,7 @@ class Controller:
 		self.FUNCTIONS_DICT = {
 			'x' : 0,
 			'\t' : self.next_view,
+			'u' : [
 		}
 		self.function = lambda key_integer : self.FUNCTIONS_DICT.get(chr(key_integer))
 		self.current_view_index = 0
@@ -65,10 +66,11 @@ class Controller:
 			# Conditional to exit program:
 			if function == 0:
 				return 0
-			# Conditional if keypress results in a function:
-			elif isinstance(function, list):
+			# Conditional if keypress results in an iterable of functions:
+			elif isinstance(function, list) or isinstance(function, tuple):
 				for func in function:
 					func()
+			# Conditional if keypress results in a function:
 			elif function is not None:
 				function()
 
