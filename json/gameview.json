@@ -6,5 +6,5 @@
 	"padding":6,
 	"hpercent":60,
 	"halign":"left",
-	"background_fill":"|"
+	"background_fill":"."
 }
