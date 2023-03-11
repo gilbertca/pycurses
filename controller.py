@@ -66,6 +66,9 @@ class Controller:
 			if function == 0:
 				return 0
 			# Conditional if keypress results in a function:
+			elif isinstance(function, list):
+				for func in function:
+					func()
 			elif function is not None:
 				function()
 
