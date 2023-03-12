@@ -21,7 +21,8 @@ class AbstractBaseView:
 
 	@log
 	def add_string(self, string, y=None, x=None, *args, **kwargs):
-		if y is None and x is None:
+		# NEEDS STATEMENT FOR NONEXISTENT X OR Y?
+		if y is None or x is None:
 			self.screen.addstr(string, *args, **kwargs)
 		elif y >= 0 and x >= 0:
 			self.screen.addstr(y, x, string, *args, **kwargs)
@@ -61,8 +62,7 @@ class AbstractBaseView:
 		raise Exception(f"This method must be overloaded by it's child.")
 
 	@log
-	def interact(self):
-		"""
+	def interact(self): """
 		Method which will check for internal functions first,
 			and return the key_press if no function is found.
 		Maybe the ability to pass commands to multiple views

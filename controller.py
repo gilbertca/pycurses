@@ -25,7 +25,7 @@ class Controller:
 		self.FUNCTIONS_DICT = {
 			'x' : 0,
 			'\t' : self.next_view,
-			'u' : [
+					
 		}
 		self.function = lambda key_integer : self.FUNCTIONS_DICT.get(chr(key_integer))
 		self.current_view_index = 0

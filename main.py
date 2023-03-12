@@ -13,8 +13,8 @@ def main(stdscr):
 	# Required:
 	controller = Controller(stdscr)
 	# Arbitrary data:
-	view_name = "gameview"
-	view_n2 = "listview"
+	view_name = "game_view"
+	view_n2 = "inventory_view"
 	view_atr = parse_json(JSON_FILE1)
 	view_a2 = parse_json(JSON_FILE2)
 	# To draw views:

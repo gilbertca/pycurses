@@ -2,6 +2,7 @@ import curses
 from utils import log
 from baseview import AbstractBaseView
 from listview import ListView
+from controller import Controller
 
 class GameView(AbstractBaseView):
 	"""
@@ -32,3 +33,25 @@ class InventoryView(ListView):
 		super().__init__(*args, **kwargs)
 		# This terrible line creates a nice string from inventory:
 		self.iterable = [f"{item.capitalize()} {InventoryView.starting_inventory.get(item)}" for item in InventoryView.starting_inventory]
+
+	def 
+
+class GameController(Controller):
+	"""
+	Inherits from controller, and add's custom methods to FUNCTIONS_DICT
+	"""
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.FUNCTIONS_DICT.update({
+			'u' : self.use_item	
+		})
+
+	def use_item(self):
+		"""
+		Swaps focus to the inventory, and lets the player *use* an item
+		"""
+		# Hard coded name of inventory view:
+		ITEM_VIEW_NAME = "inventory_view"
+		view = self.views(ITEM_VIEW_NAME) # Get view
+		
+
